@@ -1,6 +1,5 @@
 ---
-trigger: command_exit_code_nonzero
-priority: high
+trigger: always_on
 ---
 
 # ERROR RECOVERY — Automatic Diagnosis & Retry Protocol

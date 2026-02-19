@@ -1,6 +1,5 @@
 ---
-trigger: session_start
-priority: highest
+trigger: always_on
 ---
 
 # MEMORY LOADER — Caricamento Conoscenza All'Avvio

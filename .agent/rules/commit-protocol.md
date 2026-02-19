@@ -1,6 +1,5 @@
 ---
-trigger: task_complete
-priority: high
+trigger: always_on
 ---
 
 # COMMIT PROTOCOL — Atomic Commits After Every [x]

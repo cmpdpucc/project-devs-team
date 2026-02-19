@@ -1,6 +1,5 @@
 ---
-trigger: before_write
-priority: highest
+trigger: always_on
 ---
 
 # PRE-FLIGHT VALIDATION GATE — Step 0.5

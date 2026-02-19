@@ -1,6 +1,7 @@
 # 🚀 RALPH PLAN — Self-Enhancement v4: Smart Commit Protocol
 
 > **Questo file è il SINGOLO punto di verità per TUTTE le operazioni in corso.**
+> Prima di ogni risposta, Antigravity DEVE leggere questo file.
 
 ---
 
