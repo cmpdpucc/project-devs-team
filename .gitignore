@@ -1,0 +1,32 @@
+# Antigravity
+.antigravity/
+*.antigravity-session
+
+# OpenCode
+.opencode/
+opencode.log
+
+# Segreti
+.env*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Build
+node_modules/
+dist/
+build/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+
+# Agent Runtime
+.agent/memory/last_preflight.json
+demo_log.txt
