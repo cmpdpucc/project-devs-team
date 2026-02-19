@@ -1,4 +1,4 @@
-# 🚀 RALPH PLAN — Self-Enhancement v4: Smart Commit Protocol
+# 🚀 RALPH PLAN — Self-Enhancement v5: Context Guardian
 
 > **Questo file è il SINGOLO punto di verità per TUTTE le operazioni in corso.**
 > Prima di ogni risposta, Antigravity DEVE leggere questo file.
@@ -14,40 +14,63 @@
 - **Self-Enhancement v2: Memory** — `.agent/memory/` con 6 file, `memory-loader.md`
 - **Self-Enhancement v2: Auto-Recovery** — `error-recovery.md`, `ERROR_PATTERNS.md`
 - **Self-Enhancement v3: Pre-Flight Gate** — `pre_flight.py`, `pre-flight.md`, `/preflight`
+- **Self-Enhancement v4: Smart Commit Protocol** — `smart_commit.py`, `commit-protocol.md`, `/commit`, 20 commit atomici su GitHub
 
 </details>
 
 ---
 
-## Phase 4 — 🎯 Smart Commit Protocol ✅ COMPLETATO
-> **🎯 Supervisore:** `@devops-engineer`
+## Phase 5 — 🔐 Context Guardian
+> **🎯 Supervisore:** `@orchestrator`
+> **🎯 Agente Esecutore:** `@documentation-writer` + `@backend-specialist`
 
-### 4.1 Core Script: `smart_commit.py`
-- [x] `GitContext` — rileva repo state: init, branch, remote, dirty files
-- [x] `CommitGenerator` — genera messaggi Conventional Commits
-- [x] `RepoManager` — git init idempotente, configura remote, `gh repo create` account-agnostic
-- [x] `CommitRunner` — `git add`, `git commit`, `git push` con retry (max 3)
-- [x] CLI interface completa — `--from-plan`, `--create-remote`, `--push`, `--status`
+### Problema
+In sessioni lunghe (> ~20 tool calls) o troncate, il contesto si perde:
+- Lezioni apprese non vengono scritte (problema di oggi)
+- Decisioni prese mid-session non vengono registrate
+- Se la sessione si tronca, il lavoro successivo riparte da zero
 
-### 4.2 Commit Protocol Rule: `commit-protocol.md`
-- [x] Regola "Commit after [x]" con Conventional Commits cheatsheet
-- [x] Integrazione Step 7.5 in `self-governance.md`
+### Soluzione
+Un sistema di checkpoint automatici che scrive stato intra-sessione e permette recovery.
 
-### 4.3 `/commit` Workflow
-- [x] Creato `.agent/workflows/commit.md` con `// turbo` e recovery steps
+---
 
-### 4.4 GitHub Repo Creation + Real Commits
-- [x] `git init -b main` — repository locale inizializzato
-- [x] `.gitignore` aggiornato con `__pycache__/`, `*.pyc`, `last_preflight.json`
-- [x] `gh repo create project-devs-team` → https://github.com/cmpdpucc/project-devs-team
-- [x] Commit `chore`: initial commit (f8a057c) — 269 file
-- [x] Commit `docs(memory)`: memory + governance cycle (3fae2f1)
-- [x] `git push -u origin main` ✅
+### 5.1 `session_checkpoint.py` — Script Checkpoint
+- [x] Funzione `write_checkpoint()`: scrive snapshot in `SESSION_LOG.md`
+  - **Agente:** `@backend-specialist` | Skills: `python-patterns`, `clean-code`
+  - Fields: `timestamp`, `last_task_done`, `files_modified[]`, `decisions[]`, `open_questions[]`, `next_step`
+  - DoD: script eseguibile standalone, aggiorna SEC senza sovrascrivere storico
+- [x] Funzione `read_last_checkpoint()`: legge ultimo checkpoint per recovery
+  - DoD: output strutturato (JSON + pretty print), usabile da regola memory-loader
+- [x] Funzione `diff_since_checkpoint()`: mostra cosa è cambiato dall'ultimo checkpoint
+  - DoD: usa `git diff --stat` + lista file modificati recentemente
+- [x] CLI: `python .agent/scripts/session_checkpoint.py --write "desc"` / `--read` / `--diff`
+  - DoD: exit 0 su successo, exit 1 su errore con messaggio leggibile
 
-### 4.5 Memory Update
-- [x] `DECISIONS.md` — ADR-005 (pre_flight standalone), ADR-006 (account-agnostic commits)
-- [x] `LESSONS_LEARNED.md` — 3 nuove lezioni (checklist stubs, ANSI Windows, gh auth format)
-- [x] `PROJECT_CONTEXT.md` — GitHub URL, Step 0.5/7.5, nuovi script
+### 5.2 Aggiornamento `self-governance.md` — Checkpoint nel Ciclo
+- [x] Aggiungere regola: ogni ~10 tool calls → `session_checkpoint.py --write`
+  - **Agente:** `@documentation-writer` | Skills: `plan-writing`
+  - DoD: regola chiara con trigger, skip conditions, formato checkpoint
+- [x] Allineare `memory-loader.md` Step 4: leggi checkpoint se esiste e < 24h
+  - DoD: Step 4 aggiornato con comando esplicito e logica "offri recovery"
+
+### 5.3 `SESSION_LOG.md` — Formato Checkpoint
+- [x] Definire formato: YAML frontmatter + sezioni markdown
+  - **Agente:** `@documentation-writer` | Skills: `documentation-templates`
+  - DoD: file leggibile da `view_file`, parseable da script, max 100 righe per checkpoint
+- [x] Aggiungere `SESSION_LOG.md` al sistema memory (già esiste vuoto → va strutturato)
+
+### 5.4 `/checkpoint` Workflow — Slash Command
+- [x] Creare `.agent/workflows/checkpoint.md`
+  - **Agente:** `@documentation-writer` | Skills: `plan-writing`
+  - `// turbo` step: `python .agent/scripts/session_checkpoint.py --write "manual checkpoint"`
+  - Include: `--read` per recovery, `--diff` per vedere cosa è cambiato
+  - DoD: usabile come `/checkpoint` slash command
+
+### 5.5 Memory + Commit
+- [x] Aggiornare `DECISIONS.md` con ADR-007 (Context Guardian design)
+- [x] Aggiornare `LESSONS_LEARNED.md` con lezione su checkpoint manuale vs automatico
+- [x] Commit atomico: `feat(memory): add context guardian checkpoint system`
 
 ---
 
@@ -63,15 +86,6 @@
 
 | Timestamp | Decisione | Motivazione |
 |-----------|-----------|-------------|
-| 2026-02-19 19:35 | Python script over bash | Cross-platform, account-agnostic, error handling |
-| 2026-02-19 19:35 | Conventional Commits format | Standard industria, leggibile da changelog tools |
-| 2026-02-19 19:35 | `gh auth status` per owner | Mai hardcodare account — funziona con qualsiasi login |
-| 2026-02-19 19:44 | Initial mega-commit per baseline | Tutti i file esistenti → 1 commit, poi atomic per nuovi cambiamenti |
-
----
-
-## 🔴 Lezioni Apprese
-
-1. **git add <file> + smart_commit → no staged files** se il file era già in un commit precedente e non è stato modificato
-2. **Mega-commit iniziale è accettabile** come baseline, poi si lavora in modo atomico
-3. **`gh api user --jq .login`** è più affidabile di `gh auth status --json` per rilevare l'utente corrente
+| 2026-02-19 22:28 | Python script (non rule-only) | Script permette lettura/scrittura programmatica + CLI testabile |
+| 2026-02-19 22:28 | Checkpoint ogni ~10 tool calls | Bilanciamento overhead vs granularità recovery |
+| 2026-02-19 22:28 | SESSION_LOG.md già esiste | Si struttura file esistente invece di crearne uno nuovo |
