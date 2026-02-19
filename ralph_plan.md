@@ -1,4 +1,4 @@
-# 🚀 RALPH PLAN — Self-Enhancement v5: Context Guardian
+# 🚀 RALPH PLAN — Self-Enhancement v6: Progress Dashboard
 
 > **Questo file è il SINGOLO punto di verità per TUTTE le operazioni in corso.**
 > Prima di ogni risposta, Antigravity DEVE leggere questo file.
@@ -10,67 +10,77 @@
 <details>
 <summary>✅ Fasi completate precedenti</summary>
 
-- **Self-Governance Framework v1** — `ralph_plan.md`, kill-switch, `self-governance.md`
-- **Self-Enhancement v2: Memory** — `.agent/memory/` con 6 file, `memory-loader.md`
-- **Self-Enhancement v2: Auto-Recovery** — `error-recovery.md`, `ERROR_PATTERNS.md`
-- **Self-Enhancement v3: Pre-Flight Gate** — `pre_flight.py`, `pre-flight.md`, `/preflight`
-- **Self-Enhancement v4: Smart Commit Protocol** — `smart_commit.py`, `commit-protocol.md`, `/commit`, 20 commit atomici su GitHub
+- **v1: Self-Governance** — `ralph_plan.md`, kill-switch, `self-governance.md`
+- **v2: Memory** — `.agent/memory/` con 6 file, `memory-loader.md`, `error-recovery.md`
+- **v3: Pre-Flight Gate** — `pre_flight.py`, `pre-flight.md`, `/preflight`
+- **v4: Smart Commit Protocol** — `smart_commit.py`, `commit-protocol.md`, `/commit`, 20+ commit atomici
+- **v5: Context Guardian** — `session_checkpoint.py`, `SESSION_LOG.md`, `/checkpoint`
 
 </details>
 
 ---
 
-## Phase 5 — 🔐 Context Guardian
-> **🎯 Supervisore:** `@orchestrator`
-> **🎯 Agente Esecutore:** `@documentation-writer` + `@backend-specialist`
+## Phase 6 — 📊 Progress Dashboard
+> **🎯 Supervisore:** `@orchestrator` | Skills: `parallel-agents`, `behavioral-modes`
 
-### Problema
-In sessioni lunghe (> ~20 tool calls) o troncate, il contesto si perde:
-- Lezioni apprese non vengono scritte (problema di oggi)
-- Decisioni prese mid-session non vengono registrate
-- Se la sessione si tronca, il lavoro successivo riparte da zero
+### Agenti Assegnati (Orchestrazione Parallela — Min 3)
 
-### Soluzione
-Un sistema di checkpoint automatici che scrive stato intra-sessione e permette recovery.
+| Agente | Dominio | Tasks |
+|--------|---------|-------|
+| `@backend-specialist` | Python/Logic | `progress_reporter.py` — parsing + metriche |
+| `@documentation-writer` | Output/Format | `/status` workflow upgrade + report format |
+| `@test-engineer` | QA | Test del parser + verifica exit codes |
+
+**OpenCode delegate:** analisi `ralph_plan.md` per pattern comuni → generazione test fixtures
 
 ---
 
-### 5.1 `session_checkpoint.py` — Script Checkpoint
-- [x] Funzione `write_checkpoint()`: scrive snapshot in `SESSION_LOG.md`
-  - **Agente:** `@backend-specialist` | Skills: `python-patterns`, `clean-code`
-  - Fields: `timestamp`, `last_task_done`, `files_modified[]`, `decisions[]`, `open_questions[]`, `next_step`
-  - DoD: script eseguibile standalone, aggiorna SEC senza sovrascrivere storico
-- [x] Funzione `read_last_checkpoint()`: legge ultimo checkpoint per recovery
-  - DoD: output strutturato (JSON + pretty print), usabile da regola memory-loader
-- [x] Funzione `diff_since_checkpoint()`: mostra cosa è cambiato dall'ultimo checkpoint
-  - DoD: usa `git diff --stat` + lista file modificati recentemente
-- [x] CLI: `python .agent/scripts/session_checkpoint.py --write "desc"` / `--read` / `--diff`
-  - DoD: exit 0 su successo, exit 1 su errore con messaggio leggibile
+### 6.1 `progress_reporter.py` — Core Parser
+> **Agente:** `@backend-specialist` | Skills: `python-patterns`, `clean-code`
 
-### 5.2 Aggiornamento `self-governance.md` — Checkpoint nel Ciclo
-- [x] Aggiungere regola: ogni ~10 tool calls → `session_checkpoint.py --write`
-  - **Agente:** `@documentation-writer` | Skills: `plan-writing`
-  - DoD: regola chiara con trigger, skip conditions, formato checkpoint
-- [x] Allineare `memory-loader.md` Step 4: leggi checkpoint se esiste e < 24h
-  - DoD: Step 4 aggiornato con comando esplicito e logica "offri recovery"
+- [x] Parse `ralph_plan.md` → conteggio `[x]` / `[/]` / `[ ]` / `[-]` per fase
+  - DoD: output dizionario `{phase: {done, in_progress, todo, cancelled}}`
+- [x] Calcolo % completamento per fase e totale
+  - DoD: float 0.0–100.0, arrotondato a 1 decimale
+- [x] Rilevamento task bloccati `[!]` e in progress `[/]`
+  - DoD: lista `{task, line_number, context}` per ciascuno
+- [x] Progress bar ASCII + colored terminal output
+  - DoD: `████░░░░ 60% (3/5 tasks)` con colori ANSI
+- [x] CLI: `python .agent/scripts/progress_reporter.py` + `--json` + `--phase <n>`
+  - DoD: exit 0 su successo, JSON machine-readable con `--json`
 
-### 5.3 `SESSION_LOG.md` — Formato Checkpoint
-- [x] Definire formato: YAML frontmatter + sezioni markdown
-  - **Agente:** `@documentation-writer` | Skills: `documentation-templates`
-  - DoD: file leggibile da `view_file`, parseable da script, max 100 righe per checkpoint
-- [x] Aggiungere `SESSION_LOG.md` al sistema memory (già esiste vuoto → va strutturato)
+### 6.2 Upgrade `/status` Workflow
+> **Agente:** `@documentation-writer` | Skills: `documentation-templates`, `plan-writing`
 
-### 5.4 `/checkpoint` Workflow — Slash Command
-- [x] Creare `.agent/workflows/checkpoint.md`
-  - **Agente:** `@documentation-writer` | Skills: `plan-writing`
-  - `// turbo` step: `python .agent/scripts/session_checkpoint.py --write "manual checkpoint"`
-  - Include: `--read` per recovery, `--diff` per vedere cosa è cambiato
-  - DoD: usabile come `/checkpoint` slash command
+- [x] Aggiornare `.agent/workflows/status.md` con `/status` che chiama `progress_reporter.py`
+  - DoD: `// turbo` step, mostra dashboard completo, link a `ralph_plan.md`
+- [x] Aggiungere sezione "Commit Recenti" — `git log --oneline -5`
+  - DoD: incluso nel report `/status`
+- [x] Aggiungere sezione "Processi Attivi" — from ralph_plan tabella
+  - DoD: estratto dalla sezione `🛡️ Processi Attivi`
 
-### 5.5 Memory + Commit
-- [x] Aggiornare `DECISIONS.md` con ADR-007 (Context Guardian design)
-- [x] Aggiornare `LESSONS_LEARNED.md` con lezione su checkpoint manuale vs automatico
-- [x] Commit atomico: `feat(memory): add context guardian checkpoint system`
+### 6.3 Test Suite
+> **Agente:** `@test-engineer` | Skills: `testing-patterns`, `tdd-workflow`
+> **OpenCode delegate:** `opencode run "genera fixture ralph_plan.md con edge cases"`
+
+- [x] Test parser con piano completo (all `[x]`) → deve dare 100%
+  - DoD: exit 0, output `100.0%`
+- [x] Test con piano vuoto / senza tasks → graceful fallback
+  - DoD: exit 0, output `0.0%`
+- [x] Test `--json` output machine-readable
+  - DoD: `json.loads()` non genera eccezioni
+- [x] Test progress bar rendering corretto
+  - DoD: lunghezza barra = 20 caratteri, % corretto
+
+### 6.4 Memory + Atomic Commits
+> **Step 7.5 protocol:** commit per ogni `[x]`
+
+- [x] `DECISIONS.md` → ADR-008 (progress dashboard design)
+- [x] `PROJECT_CONTEXT.md` → aggiunge `progress_reporter.py` a script inventory
+- [x] Commit: `feat(scripts): add progress_reporter.py with ASCII dashboard`
+- [x] Commit: `feat(workflows): upgrade /status with progress dashboard`
+- [x] Commit: `test: add progress reporter test suite`
+- [x] Commit: `docs(memory): ADR-008 and PROJECT_CONTEXT update`
 
 ---
 
@@ -86,6 +96,7 @@ Un sistema di checkpoint automatici che scrive stato intra-sessione e permette r
 
 | Timestamp | Decisione | Motivazione |
 |-----------|-----------|-------------|
-| 2026-02-19 22:28 | Python script (non rule-only) | Script permette lettura/scrittura programmatica + CLI testabile |
-| 2026-02-19 22:28 | Checkpoint ogni ~10 tool calls | Bilanciamento overhead vs granularità recovery |
-| 2026-02-19 22:28 | SESSION_LOG.md già esiste | Si struttura file esistente invece di crearne uno nuovo |
+| 2026-02-19 22:40 | Orchestrazione parallela 3 agenti | User request: agenti + skills per velocità e parallelismo |
+| 2026-02-19 22:40 | OpenCode per fixture generation | Lettura large context `ralph_plan.md` → test patterns |
+| 2026-02-19 22:40 | ASCII progress bar (no external deps) | Zero dipendenze extra, funziona in qualsiasi terminale |
+| 2026-02-19 22:40 | `/status` come entry point unico | Un solo comando per vedere tutto il progetto |

@@ -55,3 +55,10 @@ entries: 7
 - **Decision:** `session_checkpoint.py` — a standalone Python script with `--write / --read / --diff` CLI. Writes structured `## [ISO] description` entries, auto-captures git state, parseable with regex.
 - **Rationale:** Script = testable, explicit, auditable. Manual update = forgotten every time.
 - **Consequences:** One extra dependency (script must exist). But checkpoint is now deterministic and machine-readable for recovery flow.
+
+## ADR-008: Progress Dashboard  ASCII over rich library
+- **Date:** 2026-02-19
+- **Context:** Need visual progress feedback. Options: rich/terminal library vs ASCII-only.
+- **Decision:** ASCII progress bar with ANSI colors (no external deps). TTY detection via sys.stdout.isatty().
+- **Rationale:** Zero dependencies = works in any subprocess, CI, or Windows terminal. rich adds install burden.
+- **Consequences:** Slightly less polished than rich, but fully portable.
