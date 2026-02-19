@@ -1,0 +1,25 @@
+{
+  "model": "opencode/gpt-5.2-codex",
+  "permission": {
+    "bash": {
+      "git push": "ask",
+      "rm -rf *": "deny",
+      "*": "ask"
+    },
+    "edit": "allow",
+    "read": "allow"
+  },
+  "tui": {
+    "scroll_acceleration": {
+      "enabled": true
+    },
+    "diff_style": "auto"
+  },
+  "watcher": {
+    "ignore": ["node_modules/**", ".git/**", "dist/**", "build/**", ".antigravity/**", ".agent/**"]
+  },
+  "instructions": [
+    "{file:.agent/rules/GEMINI.md}",
+    "{file:.agent/ARCHITECTURE.md}"
+  ]
+}
