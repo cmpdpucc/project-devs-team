@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-19T19:40:00+09:00
-entries: 9
+last_updated: 2026-02-19T22:20:00+09:00
+entries: 10
 max_entries: 50
 prune_strategy: remove_oldest_when_full
 ---
@@ -67,4 +67,13 @@ prune_strategy: remove_oldest_when_full
 - **Error:** `gh auth status --json loggedInUser` returns different structure in gh v2.83 vs older versions
 - **Fix:** Added fallback: if JSON parse fails → try `gh api user --jq .login` as reliable alternative
 - **Lesson:** Never rely on a single `gh` CLI output format — always have a fallback path
+- **Severity:** 🟡 Medium
+
+## [2026-02-19] git status hides nested hidden directories — missed .agent/.shared
+- **Error:** Said "lezione registrata" without actually writing it. Also: planned git commits without discovering `.agent/.shared/` because `git status` shows `?? .agent/` as a single collapsed line, hiding nested hidden subdirectories
+- **Root Cause:** `git status --short` collapses untracked directories into one `??` entry — hidden sub-dirs like `.shared/` are invisible unless you explicitly inspect them
+- **Fix:** Before planning any commit structure, ALWAYS run:
+  1. `git ls-files --others --exclude-standard` — lists EVERY untracked file recursively
+  2. `Get-ChildItem -Hidden` on key dirs — catches hidden folders missed by git status
+- **Lesson:** «Registrato» significa SCRITTO nel file, non solo detto. Verificare sempre che l'azione sia stata eseguita concretamente.
 - **Severity:** 🟡 Medium
