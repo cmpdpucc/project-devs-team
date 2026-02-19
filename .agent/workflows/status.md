@@ -2,85 +2,72 @@
 description: Display agent and project status. Progress tracking and status board.
 ---
 
-# /status - Show Status
+# /status — Project Status Dashboard
 
-$ARGUMENTS
-
----
-
-## Task
-
-Show current project and agent status.
-
-### What It Shows
-
-1. **Project Info**
-   - Project name and path
-   - Tech stack
-   - Current features
-
-2. **Agent Status Board**
-   - Which agents are running
-   - Which tasks are completed
-   - Pending work
-
-3. **File Statistics**
-   - Files created count
-   - Files modified count
-
-4. **Preview Status**
-   - Is server running
-   - URL
-   - Health check
+Mostra il dashboard completo del progetto: progress per fase, commit recenti, processi attivi.
 
 ---
 
-## Example Output
+## Dashboard Completo
 
-```
-=== Project Status ===
-
-📁 Project: my-ecommerce
-📂 Path: C:/projects/my-ecommerce
-🏷️ Type: nextjs-ecommerce
-📊 Status: active
-
-🔧 Tech Stack:
-   Framework: next.js
-   Database: postgresql
-   Auth: clerk
-   Payment: stripe
-
-✅ Features (5):
-   • product-listing
-   • cart
-   • checkout
-   • user-auth
-   • order-history
-
-⏳ Pending (2):
-   • admin-panel
-   • email-notifications
-
-📄 Files: 73 created, 12 modified
-
-=== Agent Status ===
-
-✅ database-architect → Completed
-✅ backend-specialist → Completed
-🔄 frontend-specialist → Dashboard components (60%)
-⏳ test-engineer → Waiting
-
-=== Preview ===
-
-🌐 URL: http://localhost:3000
-💚 Health: OK
+// turbo
+```powershell
+python .agent/scripts/progress_reporter.py
 ```
 
 ---
 
-## Technical
+## Output JSON (machine-readable)
 
-Status uses these scripts:
-- `python .agent/scripts/session_manager.py status`
-- `python .agent/scripts/auto_preview.py status`
+```powershell
+python .agent/scripts/progress_reporter.py --json
+```
+
+---
+
+## Filtra per Fase Specifica
+
+```powershell
+python .agent/scripts/progress_reporter.py --phase 6
+```
+
+---
+
+## Compact Mode (solo progress bar, no task details)
+
+```powershell
+python .agent/scripts/progress_reporter.py --compact
+```
+
+---
+
+## Esempio Output
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                      📊  PROJECT STATUS                       │
+├──────────────────────────────────────────────────────────────┤
+  Phase 6                ████████░░░░░░░░░░░░░░░░   40.0%  (2/5)
+  ↻ progress_reporter.py in sviluppo
+  ──────────────────────────────────────────────────────────
+  TOTAL                  ████████████████░░░░░░░░   75.0%  (15/20)
+├──────────────────────────────────────────────────────────────┤
+│  📝  RECENT COMMITS                                           │
+  fc6a304  feat(memory): Context Guardian checkpoint system
+  e08f483  chore(governance): mark Phase 5 complete
+  96be9e9  docs(agents): add IDE/OpenCode documentation
+├──────────────────────────────────────────────────────────────┤
+│  🛡️  ACTIVE PROCESSES                                         │
+  Nessun processo attivo
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Integrazioni
+
+| Script | Funzione |
+|--------|---------|
+| `progress_reporter.py` | Parse ralph_plan.md → % per fase |
+| `session_checkpoint.py` | Ultimo checkpoint timestamp |
+| `git log --oneline -5` | Commit recenti |
