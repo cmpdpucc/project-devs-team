@@ -1,0 +1,25 @@
+name: AI Code Review
+on: [pull_request]
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node & NPM
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18
+      - name: Install OpenCode
+        run: npm install -g opencode-ai@latest
+      - name: AI Review
+        run: opencode run "Analizza questo PR per sicurezza, performance e best practices. Genera report in markdown."
+      - name: Comment PR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: process.env.AI_REVIEW_OUTPUT
+            })
