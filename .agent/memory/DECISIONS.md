@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-02-19T19:40:00+09:00
-entries: 6
+last_updated: 2026-02-19T22:35:00+09:00
+entries: 7
 ---
 
 # Architecture Decisions
@@ -48,3 +48,10 @@ entries: 6
 - **Context:** User wants Smart Commit Protocol to work regardless of which GitHub account is logged in.
 - **Decision:** `smart_commit.py` reads user/email from `git config` and owner from `gh api user --jq .login`. Never hardcodes credentials. `GIT_AUTHOR_NAME`/`GIT_AUTHOR_EMAIL` as env var overrides.
 - **Consequences:** Works on any machine with `gh` authenticated. Slightly slower startup (one `gh api` call). Zero credential leakage risk.
+
+## ADR-007: Context Guardian — script over manual SESSION_LOG update
+- **Date:** 2026-02-19
+- **Context:** SESSION_LOG.md existed but was updated manually and inconsistently — proved by today's "lezione registrata" incident where nothing was actually written.
+- **Decision:** `session_checkpoint.py` — a standalone Python script with `--write / --read / --diff` CLI. Writes structured `## [ISO] description` entries, auto-captures git state, parseable with regex.
+- **Rationale:** Script = testable, explicit, auditable. Manual update = forgotten every time.
+- **Consequences:** One extra dependency (script must exist). But checkpoint is now deterministic and machine-readable for recovery flow.

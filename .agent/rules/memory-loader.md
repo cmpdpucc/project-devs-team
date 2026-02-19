@@ -30,9 +30,11 @@ Leggi .agent/memory/USER_PREFERENCES.md
 
 ### Step 4: Recupera Sessione Interrotta (se esiste)
 ```
-Se .agent/memory/SESSION_LOG.md esiste E last_checkpoint è recente (< 24h):
-→ Leggi per recuperare contesto della sessione precedente
-→ Offri all'utente: "Ho trovato una sessione interrotta. Vuoi continuare?"
+python .agent/scripts/session_checkpoint.py --read --json
+→ Se last_checkpoint < 24h: offri recovery
+→ "Ho trovato una sessione interrotta alle [timestamp]. Focus: [last_task]. Vuoi continuare?"
+→ Se utente conferma: leggi ralph_plan.md, riprendi dai [ ] task
+→ Se utente nega: scrivi nuovo checkpoint vuoto e parti da capo
 ```
 
 ### Step 5: Consulta Decisioni
@@ -45,13 +47,15 @@ Leggi .agent/memory/DECISIONS.md
 
 ## 📝 Checkpoint Periodico (Intra-Sessione)
 
-**Ogni ~10 tool calls**, aggiorna `.agent/memory/SESSION_LOG.md` con:
-- Decisioni prese dall'ultimo checkpoint
-- File modificati
-- Focus corrente
-- Domande aperte
+**Ogni ~10 tool calls**, esegui:
+```bash
+python .agent/scripts/session_checkpoint.py --write "descrizione stato corrente"
+```
 
-Questo garantisce che se la sessione si tronca, il contesto è recuperabile.
+Cattura automaticamente: branch, last [x] task, file modificati.
+Garantisce recovery se la sessione si tronca.
+
+**Skip conditions:** solo se il task dura < 5 tool calls totali.
 
 ---
 

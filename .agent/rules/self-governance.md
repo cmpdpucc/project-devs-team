@@ -135,16 +135,20 @@ Quando l'utente fa una nuova richiesta:
 ## 📝 Memory Checkpoint Protocol
 
 ### Intra-Sessione (ogni ~10 tool calls):
-- Aggiorna `.agent/memory/SESSION_LOG.md` con:
-  - Decisioni prese dall'ultimo checkpoint
-  - File modificati
-  - Focus corrente
-  - Domande aperte
+```bash
+python .agent/scripts/session_checkpoint.py --write "descrizione stato corrente"
+```
+Cattura automaticamente: branch, last [x] task, file modificati dall'ultimo commit.
 
 ### Post-Sessione (prima di notify_user finale):
-- Aggiorna `LESSONS_LEARNED.md` con nuovi errori/fix
-- Aggiorna `DECISIONS.md` con nuove decisioni architetturali
-- Aggiorna `PROJECT_CONTEXT.md` se la struttura del progetto è cambiata
-- Aggiorna `USER_PREFERENCES.md` se hai osservato nuovi pattern
+```bash
+python .agent/scripts/session_checkpoint.py --write "sessione completata"
+```
+Poi aggiorna manualmente:
+- `LESSONS_LEARNED.md` con nuovi errori/fix
+- `DECISIONS.md` con nuove decisioni architetturali
+- `PROJECT_CONTEXT.md` se la struttura del progetto è cambiata
+- `USER_PREFERENCES.md` se hai osservato nuovi pattern
 
 > 🔴 **MAI chiudere una sessione senza aggiornare la memoria.**
+> 🔴 **"Registrato" significa SCRITTO nel file, non solo detto.**
