@@ -31,6 +31,7 @@ STEP 4:   Se la richiesta MODIFICA un task → Aggiorna il piano
 STEP 5:   (riserva)
 STEP 6:   Esegui il lavoro
 STEP 7:   Aggiorna ralph_plan.md con i risultati
+STEP 7.1: Verifica con progress_reporter → `python .agent/scripts/progress_reporter.py --json` → conferma che i [x] scritti corrispondano al conteggio reale (todo==0 per ogni fase completata)
 STEP 7.5: Commit atomico → python .agent/scripts/smart_commit.py --from-plan --all --push
 STEP 8:   Se hai lanciato processi → Registrali nella tabella "Processi Attivi"
 ```

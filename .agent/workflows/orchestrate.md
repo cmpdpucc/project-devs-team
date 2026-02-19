@@ -172,10 +172,19 @@ Use the project-planner agent to create PLAN.md:
 
 
 ### Step 4: Verification (MANDATORY)
+
 The LAST agent must run appropriate verification scripts:
-```bash
+
+```powershell
+# 1. Verification Scripts
 python .agent/skills/vulnerability-scanner/scripts/security_scan.py .
 python .agent/skills/lint-and-validate/scripts/lint_runner.py .
+
+# 2. Progress Verification (Match ralph_plan.md reality)
+python .agent/scripts/progress_reporter.py --json
+# Il gate passa SOLO SE:
+# - total.pct == 100.0 (se l'intera orchestrazione mirava a completare tutto)
+# - OPPURE le fasi target hanno pct == 100.0
 ```
 
 ### Step 5: Synthesize Results

@@ -4,11 +4,38 @@ description: Display agent and project status. Progress tracking and status boar
 
 # /status — Project Status Dashboard
 
-Mostra il dashboard completo del progetto: progress per fase, commit recenti, processi attivi.
+> **Dual Use:**
+> 1. **User Dashboard:** Vista sintetica per l'umano (`/status`)
+> 2. **Orchestrator Tool:** Checkpoint strumentale per l'agente (Pre/Mid/Post run)
 
 ---
 
-## Dashboard Completo
+## 🤖 Uso Interno Orchestratore
+
+### PRE-RUN Snapshot (Baseline)
+Da eseguire PRIMA di lanciare agenti in parallelo (Phase 2):
+```powershell
+python .agent/scripts/progress_reporter.py --compact
+# Salva questo output mentalmente per confrontare i progressi
+```
+
+### MID-RUN Check (Monitoraggio)
+Da eseguire tra un batch e l'altro:
+```powershell
+python .agent/scripts/progress_reporter.py --phase <N>
+```
+
+### POST-RUN Gate (Verifica Finale)
+Da usare nel COMPLETION GATE. Se `pct != 100.0`, la fase NON è finita.
+```powershell
+python .agent/scripts/progress_reporter.py --json
+```
+
+---
+
+## 👤 User Dashboard
+
+### Dashboard Completo
 
 // turbo
 ```powershell

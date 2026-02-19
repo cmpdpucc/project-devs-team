@@ -140,7 +140,7 @@ TASK_RE = re.compile(
 # Matches phase headers: ## Phase 6 ..., ## Phase 6 — 📊 ..., ### 6.1 ...
 # Supports emoji, dashes, any trailing chars after phase name
 PHASE_RE = re.compile(
-    r"^#{1,3}\s*(Phase\s*\d+\b.{0,60}|\d+\.\d+\s+\S.{0,60})$",
+    r"^#{1,3}\s*(Phase\s*\d+\b.*|\d+\.\d+\s+\S.*)",
     re.IGNORECASE,
 )
 
@@ -165,8 +165,10 @@ def parse_plan(path: Path = PLAN_FILE, filter_phase: Optional[str] = None) -> Re
             if re.match(r"^\d+\.\d+", phase_name):
                 continue
             # Skip LEGACY and similar
-            if any(skip in phase_name.upper() for skip in ["LEGACY", "TODO", "LOG"]):
+            if any(skip in phase_name.upper() for skip in ["TODO", "LOG"]):
+                current_phase = None
                 continue
+
             current_phase = PhaseStats(name=phase_name)
             report.phases.append(current_phase)
             continue
