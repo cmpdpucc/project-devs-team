@@ -83,6 +83,65 @@ L'obiettivo di questa fase è creare il ponte bidirezionale tra Antigravity (IDE
 
 ---
 
+## Phase 8 — The "Infinity" Stack (Kimi 2.5 Visual Workflow)
+> **🎯 Supervisore:** `@orchestrator` | Skills: `parallel-agents`
+
+L'obiettivo è standardizzare il workflow "Sketch-to-Code" utilizzando Kimi 2.5 via OpenCode, trasformando i design visivi in codice React fedele al pixel.
+
+### Agenti Assegnati
+
+| Agente | Dominio |
+|--------|---------|
+| `@project-planner` | Documentazione del Workflow Integrato |
+| `@frontend-specialist` | Skill specializzata per Visual Coding (React/Tailwind) |
+
+### 8.1 `INTEGRATED_WORKFLOW.md`
+> **Agente:** `@project-planner` | Skills: `documentation-templates`
+
+- [x] Aggiornare `docs/INTEGRATED_WORKFLOW.md` con lo "Scenario 4: Visual Coding (Sketch-to-Code) con Kimi 2.5".
+  - DoD: Il file descrive i 3 step del workflow (Planning strutturale, Passaggio screenshot, Generazione codice via OpenCode).
+
+### 8.2 Creazione Skill `visual-coding-kimi`
+> **Agente:** `@frontend-specialist` | Skills: `react-patterns`, `ui-ux-pro-max`
+
+- [x] Creare `.agent/skills/visual-coding-kimi/SKILL.md`.
+  - DoD: Il file esiste e contiene i prompt testati per Kimi ("Thinking Mode", "Fedele al pixel"), con istruzioni chiare per l'agente frontend.
+
+### 8.3 Smoke Test Integrato
+> **Agente:** `@orchestrator` | Skills: `parallel-agents`
+
+- [x] Testare Kimi 2.5 via OpenCode bridge (generazione file tmp).
+
+## Phase 9 — Portfolio Research & Design Discovery
+> **🎯 Supervisore:** `@orchestrator` | Skills: `parallel-agents`
+
+L'obiettivo è analizzare 7 siti portfolio top-tier e la libreria React Bits per raccogliere reference visuali, pattern UI/UX e componenti pronti all'uso. Tutte le descrizioni, video, screenshot e cataloghi verranno salvati nella directory `portfolio/`.
+
+### Agenti Assegnati
+
+| Agente | Dominio |
+|--------|---------|
+| `@frontend-specialist` | Analisi UI/UX, estrazione pattern, catalogazione componenti React Bits |
+| `@orchestrator` | Coordinamento dei browser subagent per l'esplorazione |
+
+### 9.1 Analisi Portfolio Reference
+> **Agente:** `@orchestrator` (tramite subagent)
+
+- [x] Navigare e analizzare: Tamal Sen e Cassie Evans.
+  - DoD: File descrittivi in `portfolio/descriptions/` e file multimediali catturati.
+- [x] Navigare e analizzare: Brittany Chiang e Matt Farley.
+  - DoD: File descrittivi e media catturati.
+- [x] Navigare e analizzare: Lauren Waller, Van Holtz e Adham Dannaway.
+  - DoD: File descrittivi e media catturati.
+
+### 9.2 Scoping Libreria React Bits
+> **Agente:** `@frontend-specialist`
+
+- [x] Esplorare `https://reactbits.dev/get-started/index` e catalogare i componenti adatti ad un portfolio.
+  - DoD: Documento `portfolio/react_bits/components_catalog.md` generato.
+
+---
+
 ## 🛡️ Processi Attivi
 
 | PID | Tipo | Porta | Stato | Lanciato Da |
