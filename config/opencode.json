@@ -1,6 +1,12 @@
 {
   "theme": "default",
-  "model": "google/gemini-2.0-flash-lite-preview-02-05:free",
+  "model": "opencode/kimi-k2.5-free",
+  "fallback_models": [
+    "opencode/minimax-m2.5-free",
+    "opencode/glm-5-free",
+    "opencode/big-pickle",
+    "opencode/gpt-5-nano"
+  ],
   "permission": {
     "bash": "ask",
     "edit": "allow",
