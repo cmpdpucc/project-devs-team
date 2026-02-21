@@ -50,31 +50,36 @@
 
 ---
 
-## Phase 2 — Antigravity Integration (Il Ponte)
-> **🎯 Supervisore:** `@backend-specialist` | Skills: `api-patterns`
+## Phase 7 — OpenCode Multi-Agent Bridge (Self-Enhancement v7)
+> **🎯 Supervisore:** `@orchestrator` | Skills: `parallel-agents`
 
-### 2.1 File delle Regole Unificate
+L'obiettivo di questa fase è creare il ponte bidirezionale tra Antigravity (IDE) e OpenCode (Terminale), permettendo la sincronizzazione delle regole e la validazione del sistema.
+
+### Agenti Assegnati (Orchestrazione Parallela - Min 3)
+
+| Agente | Dominio |
+|--------|---------|
+| `@documentation-writer` | Regole condivise e SKILL.md per OpenCode |
+| `@backend-specialist` | Script Python per il Bridge di sincronizzazione |
+| `@devops-engineer` | Script bash per la validazione dell'integrità agenti |
+
+### 7.1 `GEMINI.md` & `opencode-integration` Skill
 > **Agente:** `@documentation-writer` | Skills: `documentation-templates`
 
-- [ ] Aggiornare/Creare `.agent/rules/GEMINI.md` e `.agent/skills/opencode-integration/SKILL.md`.
-  - DoD: File creati con le regole per Antigravity/OpenCode.
+- [x] Aggiornare/Creare `.agent/rules/GEMINI.md` se necessario e scrivere `.agent/skills/opencode-integration/SKILL.md` con il manuale operativo del bridge.
+  - DoD: File `SKILL.md` creato con istruzioni chiare per l'uso combinato dei due agenti.
 
-### 2.2 Bridge Script
+### 7.2 `antigravity-opencode-bridge.py`
 > **Agente:** `@backend-specialist` | Skills: `python-patterns`
 
-- [ ] Aggiornare `scripts/antigravity-opencode-bridge.py` per sincronizzare la memoria.
-  - DoD: Lo script espone `sync_gemini_rules()` e `start_opencode_server()`.
+- [x] Sviluppare `scripts/antigravity-opencode-bridge.py`.
+  - DoD: Lo script espone funzioni per sincronizzare la memoria (es. copiare regole o leggere PID di OpenCode) e avviare server OpenCode in modo robusto.
 
----
-
-## Phase 3 — Agent Structure & Validation
-> **🎯 Supervisore:** `@devops-engineer` | Skills: `scripting`
-
-### 3.1 Validatore Struttura
+### 7.3 `validate-agent-folder.sh`
 > **Agente:** `@devops-engineer` | Skills: `bash-linux`, `powershell-windows`
 
-- [ ] Creare `scripts/validate-agent-folder.sh` per verificare la presenza di agenti e skill.
-  - DoD: Script eseguibile, controlla `rules/`, `skills/` e stampa totali.
+- [x] Sviluppare `scripts/validate-agent-folder.sh` per verificare la salute della flotta.
+  - DoD: Script eseguibile che controlla `.agent/rules/`, `.agent/skills/` e stampa lo status degli agenti al terminale con Exit code 0 se tutto sano.
 
 ---
 

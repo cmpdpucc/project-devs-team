@@ -27,6 +27,12 @@ applies_to: [antigravity, opencode]
 - **Verifica**: Esegui sempre `npm test` o `npm run build` dopo modifiche sostanziali.
 - **Bulk Ops**: Preferisci OpenCode per refactoring su >5 file.
 
+## 🌉 Bridge Protocol (Phase 7+)
+- **Sync Direction**: Antigravity (Primary) → OpenCode (Replica).
+- **Conflict Resolution**: Antigravity memory prevails.
+- **Handshake**: OpenCode must acknowledge `ralph_plan.md` updates.
+- **Shared Skills**: Both agents read from `.agent/skills/`.
+
 ## 🛸 Workflow Antigravity (IDE Agent)
 - **Planning**: Genera SEMPRE un Implementation Plan per task che toccano >3 file.
 - **Verification**: Usa il browser agent per verificare modifiche UI (visual regression).
