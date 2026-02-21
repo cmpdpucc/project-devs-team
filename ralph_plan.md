@@ -142,7 +142,75 @@ L'obiettivo è analizzare 7 siti portfolio top-tier e la libreria React Bits per
 
 ---
 
-## 🛡️ Processi Attivi
+## Phase 10 — UI/UX Pro Max & SCSS Refactoring
+> **🎯 Supervisore:** `@orchestrator` | Skills: `parallel-agents`, `ui-ux-pro-max`
+
+Sulla base del `portfolio-refactor.md`, applico l'architettura SCSS `[@uderly]`-like al nuovo Portfolio, eliminando Tailwind e integrando i componenti interattivi di React Bits.
+
+### Agenti Assegnati (Orchestrazione in Parallelo per /refactor)
+
+| Agente | Dominio |
+|--------|---------|
+| `@frontend-specialist` | Sviluppo Componenti React Bits, SCSS Architecture, Layout Refactoring |
+| `@test-engineer` | Verify visuale, E2E base e controllo accessibilità |
+| `@performance-optimizer` | Refactoring animazioni Framer per i 60fps, controllo build Next.js |
+
+### 10.1 Scaffolding SCSS ed Epuration
+> **Agente:** `@frontend-specialist` | Skills: `visual-coding-kimi`, `react-patterns`
+
+- [x] Rimozione totale di Tailwind e creazione logica SCSS (`_colors.scss`, `_theme.scss`, BEM).
+  - DoD: L'app builda senza Tailwind. `main.scss` importa tutti i partials.
+
+### 10.2 React Bits Wow-Factor Integration
+> **Agente:** `@frontend-specialist` e `@performance-optimizer`
+
+- [x] Integrazione CSS-agnostic di Spotlight, DecryptedText, PixelCard, Magnet, InfiniteScroll.
+  - DoD: I check in `portfolio-refactor.md` sono validati, tutti i componenti animano senza layout shift.
+
+### 10.3 Quality & Visual Gates
+> **Agente:** `@test-engineer` | Skills: `webapp-testing`
+
+- [x] Visual testing in localhost mode verificando contrasti (4.5:1), hover states attivi e font caricati (DM Sans/Space Grotesk).
+  - DoD: QA report allegato in `/status` e issue visive corrette in loop da K2.5.
+
+## Phase 12 — UI/UX Expansion & Transitions
+> **🎯 Supervisore:** `@frontend-specialist` | Skills: `ui-ux-pro-max`, `react-patterns`
+
+### 12.1 Layout Spacing & ScrollSpy Refinements
+> **Agente:** `@frontend-specialist`
+- [ ] Forzare altezza minima e spaziature drammatiche (top/bottom) in `_grid.scss` per permettere allo ScrollSpy di rilevare 'About' e 'Projects' senza collassare, ed evitare il feel "boring" del layout asimmetrico compresso.
+  - DoD: L'utente può scrollare comodamente; la navbar fissa reagisce su tutte le sezioni.
+
+### 12.2 Expandable Cards Component
+> **Agente:** `@frontend-specialist`
+- [ ] Refactor di `PixelCard` in `ExpandablePixelCard` (o simile) integrando `layoutId` di Framer Motion o un componente React Bits espandibile, così che un click riveli dettagli/storytelling del progetto, "vendendo" le skill.
+  - DoD: Animazione fluida di espansione a tutto schermo o modale; zero layout shift nel background.
+
+### 12.3 Transition Flow
+> **Agente:** `@frontend-specialist`
+- [ ] Introdurre un flusso di navigazione e fadeIn morbido che guidi l'utente dalla Hero ("Developer Name...") alle sezioni inferiori.
+  - DoD: Il portfolio guida visivamente lo sguardo dell'utente verso il primo scroll.
+
+---
+
+## Phase 16 — Mobile Responsive, Floating Nav & UX Audit
+> **🎯 Supervisore:** `@orchestrator` | Skills: `ui-ux-pro-max`, `visual-coding-kimi`
+
+### 16.1 CSS Audit: px to rem/em
+> **Agente:** `@frontend-specialist`
+- [x] Convertire tutti i valori `px` statici (spacing, border-radius) in `rem` per garantire scalabilità fluida.
+
+### 16.2 Container Alignment & Mobile Native Scroll
+> **Agente:** `@frontend-specialist`
+- [x] Centrare orizzontalmente e verticalmente il contenuto delle sezioni (`justify-content: center; align-items: center`).
+- [x] Risolvere lo scroll-lock su mobile ripristinando il native scroll se il dispositivo o il breakpoint lo richiede.
+
+### 16.3 Mobile Glassmorphism Floating Bar
+> **Agente:** `@frontend-specialist`
+- [x] Nascondere nav sidebar su `< 1024px`.
+- [x] Creare `MobileNav.tsx`: bottom bar rounded, blur/glassmorphism, con i link di sezione dinamici da `sections.data.ts`.
+
+---
 
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
