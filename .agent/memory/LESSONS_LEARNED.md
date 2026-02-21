@@ -9,6 +9,12 @@ prune_strategy: remove_oldest_when_full
 
 > **Regola:** Dopo ogni errore risolto, AGGIUNGI un entry qui. Max 50 entries, poi rimuovi il più vecchio.
 
+## [2026-02-21] Blind Trust in OpenCode Autonomous Execution
+- **Error:** Delegated task to OpenCode and assumed success just because it returned exit code 0.
+- **Root Cause:** Failed to act as a Supervisor. OpenCode hallucinated a non-existent model (`gpt-5.2-codex`) in configs and wrote flawed bash logic that exited 1 if PATH wasn't updated instantly.
+- **Fix:** MUST manually review all artifacts produced by OpenCode. NEVER trust exit code 0 offhand. Force prompts to OpenCode to explicitely use FREE models, exact Agent Personas, and strict DoD checks.
+- **Severity:** 🔴 Critical
+
 ## [2026-02-16] Kill switch — process declared dead without verification
 - **Error:** Stated "process terminated" without checking if PID was actually gone
 - **Fix:** Run `tasklist /FI "PID eq X"` (Windows) before declaring process dead

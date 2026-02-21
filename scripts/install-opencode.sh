@@ -25,15 +25,12 @@ fi
 
 # 3. Verify Installation
 if ! command -v opencode &> /dev/null; then
-    echo "⚠️ Warning: 'opencode' command not found in PATH."
-    echo "   Ensure your npm global bin directory is in your PATH."
-    # Try to find where it was installed
+    echo "⚠️ Warning: 'opencode' command not found in current PATH."
+    echo "   Ensure your npm global bin directory is in your PATH. You may need to restart your terminal."
     NPM_BIN=$(npm bin -g 2>/dev/null || echo "")
-    if [[ -n "$NPM_BIN" && -f "$NPM_BIN/opencode" ]]; then
-        echo "   Found at: $NPM_BIN/opencode"
-        echo "   Please add $NPM_BIN to your PATH."
+    if [[ -n "$NPM_BIN" && -d "$NPM_BIN" ]]; then
+        echo "   Global bin path: $NPM_BIN"
     fi
-    exit 1
 else
     VERSION=$(opencode --version 2>/dev/null || echo "unknown")
     echo "✅ Verified installation: opencode version $VERSION"
