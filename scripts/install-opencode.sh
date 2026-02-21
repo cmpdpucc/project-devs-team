@@ -1,53 +1,55 @@
 #!/bin/bash
+
 # scripts/install-opencode.sh
-# Installs OpenCode via npm and configures the environment.
+# Purpose: Installs OpenCode via npm and verifies Truecolor support.
+# Usage: ./scripts/install-opencode.sh
 
 set -e
 
-echo "🚀 Installing OpenCode..."
+echo "🚀 Starting OpenCode installation..."
 
-# Check if npm is installed
+# 1. Check for npm
 if ! command -v npm &> /dev/null; then
-    echo "❌ npm could not be found. Please install Node.js and npm first."
+    echo "❌ Error: npm is not installed. Please install Node.js and npm first."
     exit 1
 fi
 
-# Install OpenCode globally
-echo "📦 Running: npm install -g opencode-ai@latest"
-npm install -g opencode-ai@latest
-
-# Verify installation
-if command -v opencode &> /dev/null; then
-    echo "✅ OpenCode installed successfully version $(opencode --version)"
+# 2. Install/Update OpenCode
+echo "📦 Installing opencode-ai globally..."
+if npm install -g opencode-ai@latest; then
+    echo "✅ Successfully installed opencode-ai."
 else
-    echo "❌ OpenCode installation failed."
+    echo "❌ Error: Failed to install opencode-ai. Please check your npm configuration or permissions."
     exit 1
 fi
 
-# Check for Truecolor support
-if [ -z "$COLORTERM" ] || [ "$COLORTERM" != "truecolor" ]; then
-    echo "⚠️  Truecolor support not detected (COLORTERM=$COLORTERM)."
-    echo "   Recommended: Add 'export COLORTERM=truecolor' to your shell profile (.bashrc/.zshrc)."
-    
-    # Attempt to auto-configure for current session
-    export COLORTERM=truecolor
-    echo "   Temporary fix applied for this session."
-fi
-
-# Check for recommended terminals
-RECOMMENDED_TERMINALS=("wezterm" "alacritty" "ghostty" "kitty" "hyper")
-FOUND_TERMINAL=false
-
-for term in "${RECOMMENDED_TERMINALS[@]}"; do
-    if command -v "$term" &> /dev/null; then
-        echo "✅ Detected recommended terminal: $term"
-        FOUND_TERMINAL=true
-        break
+# 3. Verify Installation
+if ! command -v opencode &> /dev/null; then
+    echo "⚠️ Warning: 'opencode' command not found in PATH."
+    echo "   Ensure your npm global bin directory is in your PATH."
+    # Try to find where it was installed
+    NPM_BIN=$(npm bin -g 2>/dev/null || echo "")
+    if [[ -n "$NPM_BIN" && -f "$NPM_BIN/opencode" ]]; then
+        echo "   Found at: $NPM_BIN/opencode"
+        echo "   Please add $NPM_BIN to your PATH."
     fi
-done
-
-if [ "$FOUND_TERMINAL" = false ]; then
-    echo "ℹ️  Note: For the best TUI experience, consider using a modern GPU-accelerated terminal like WezTerm, Alacritty, Ghostty, or Kitty."
+    exit 1
+else
+    VERSION=$(opencode --version 2>/dev/null || echo "unknown")
+    echo "✅ Verified installation: opencode version $VERSION"
 fi
 
-echo "🎉 Setup complete! Configure OpenCode by editing config/opencode.json"
+# 4. Truecolor Check
+echo "🎨 Checking Truecolor support..."
+if [[ "$COLORTERM" != "truecolor" ]]; then
+    echo "⚠️  Warning: COLORTERM is not set to 'truecolor'."
+    echo "   To ensure the best TUI experience, please add the following to your shell profile (~/.bashrc, ~/.zshrc, etc.):"
+    echo "   export COLORTERM=truecolor"
+    
+    # Export for current session just in case this is sourced
+    export COLORTERM=truecolor
+else
+    echo "✅ Truecolor support is enabled (COLORTERM=$COLORTERM)."
+fi
+
+echo "🎉 Setup complete! Run 'opencode' to start."
