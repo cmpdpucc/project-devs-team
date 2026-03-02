@@ -9,6 +9,12 @@ prune_strategy: remove_oldest_when_full
 
 > **Regola:** Dopo ogni errore risolto, AGGIUNGI un entry qui. Max 50 entries, poi rimuovi il più vecchio.
 
+## [2026-03-02] Nested Git Repositories (Submodules) vs Root Workspace Commit
+- **Error:** Ran `smart_commit.py` from the root workspace (`project-devs-team`) expecting it to commit files inside `portfolio/`. The script returned success, but the files inside the subfolder remained uncommitted.
+- **Root Cause:** The `portfolio` folder is its own separate Git repository (a nested repo). Running git commands from the root merely commits the updated pointer of the submodule, completely ignoring all the actual code changes inside the nested `.git` structure.
+- **Fix:** Whenever working inside an application folder (like `portfolio/`), you MUST run git commands or `smart_commit.py --root portfolio` addressing that exact sub-directory.
+- **Severity:** 🔴 Critical
+
 ## [2026-03-02] Declaring "Done" on background tasks without `command_status` or side-effect verification
 - **Error:** Declared a git commit successful after launching `smart_commit.py` in the background, without ever waiting for its termination or checking `git status`. The command had actually failed completely.
 - **Root Cause:** Blind trust in fire-and-forget background processes instead of verifying the actual side-effects (e.g., checking git status or process exit code) before notifying the user.
