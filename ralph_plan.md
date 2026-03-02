@@ -212,6 +212,57 @@ Sulla base del `portfolio-refactor.md`, applico l'architettura SCSS `[@uderly]`-
 
 ---
 
+## Phase 17 — PixelCard Canvas Ripple Animation
+> **🎯 Supervisore:** `@orchestrator` | Skills: `ui-ux-pro-max`, `performance-profiling`, `visual-coding-kimi`
+
+Obiettivo: Sostituire l'overlay pixel CSS statico con un Canvas 2D animato che simula un effetto ripple/epicentro "goccia in uno stagno". Basato sul prototipo utente `PixelCanvasExample.tsx` con fix architetturali da audit.
+
+### 17.1 Core Canvas Engine — `PixelCanvasRipple.tsx`
+> **Agente:** `@performance-optimizer` | Skills: `performance-profiling`, `react-patterns`
+- [x] Creare `PixelCanvasRipple.tsx` con architettura Canvas 2D da prototipo:
+  - Offscreen canvas caching per griglia statica (singola draw call)
+  - 6 `Path2D` bande di opacità per batching draw calls
+  - `requestAnimationFrame` loop con skip via IntersectionObserver
+  - `ResizeObserver` per resize-safe canvas
+  - DPR scaling automatico (Retina)
+  - **FIX L1:** Cachare `width/height` in ref, NON usare `getBoundingClientRect()` nel loop
+  - **FIX L5:** Tipizzazione TypeScript strict (`HTMLCanvasElement`, `HTMLDivElement`, interfaccia Props)
+  - **FIX L6:** `isHovered` comunicato via `useRef`, non nel dependency array di useEffect
+  - **FIX L7:** Cooldown di 2s tra un ripple e il successivo
+  - DoD: Canvas renderizza ripple fluido, < 4ms/frame su DevTools Performance
+
+### 17.2 Accessibility & Reduced Motion
+> **Agente:** `@frontend-specialist` | Skills: `clean-code`, `react-patterns`
+- [x] Implementare `prefers-reduced-motion: reduce`:
+  - In JS: `matchMedia` → skip rAF loop, mostra griglia statica
+  - In SCSS: media query per disabilitare transizioni
+  - DoD: Utenti con motion-sensitivity vedono solo griglia statica senza animazione
+
+### 17.3 SCSS Integration — `_pixel-ripple.scss`
+> **Agente:** `@frontend-specialist` | Skills: `clean-code`
+- [x] Creare `_pixel-ripple.scss` con classi BEM (`pf-pixel-ripple`, `pf-pixel-ripple__canvas`)
+  - **FIX L3:** Zero classi Tailwind — tutto in SCSS puro
+  - `mask-image` radial per dissolyenza ai bordi
+  - Transizione `opacity 700ms` per hover show/hide
+  - Importare in `main.scss`
+  - DoD: Nessuna classe inline nel componente, solo className BEM
+
+### 17.4 Integration & Refactor `PixelCard.tsx`
+> **Agente:** `@frontend-specialist` | Skills: `react-patterns`, `clean-code`
+- [x] Rimuovere l'overlay `radial-gradient` CSS (righe 62-77 attuali)
+- [x] Montare `<PixelCanvasRipple />` passando hover state via `useRef`
+- [x] Smoke test: hover → canvas fade out | unhover → ripple riprende
+  - DoD: PixelCard mostra il ripple in idle, effetto sparisce su hover, card funziona identicamente come prima per il contenuto
+
+### 17.5 Visual QA & Perf Profiling
+> **Agente:** `@test-engineer` | Skills: `webapp-testing`, `performance-profiling`
+- [x] Browser subagent: catturare recording del ripple effect su desktop e mobile
+- [x] DevTools Performance tab: confermare < 4ms/frame
+- [x] Verificare `prefers-reduced-motion` disattivi l'animazione
+- [x] Commit atomico con verifica build verde su Vercel
+
+---
+
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
 | - | - | - | Nessun processo attivo | - |
@@ -223,3 +274,6 @@ Sulla base del `portfolio-refactor.md`, applico l'architettura SCSS `[@uderly]`-
 | Timestamp | Decisione | Motivazione |
 |-----------|-----------|-------------|
 | 2026-02-21 20:10 | Generazione Piano OpenCode | Avvio autonomo della traccia descritta in PLAN-opencode-integration.md |
+| 2026-02-22 10:45 | **Skip Web Worker** per PixelCanvasRipple | Tecnica menzionata nel doc utente ma dichiarata overkill: il portfolio mostra 1 card alla volta (fullscreen snap). Il Main Thread regge ampiamente. Complessità vs beneficio non giustificata. |
+| 2026-02-22 10:45 | **Option C (Canvas 2D)** per idle animation | Scelta dall'utente dopo brainstorm di 4 opzioni. Unica che permette controllo pixel-by-pixel fedele alla metafora "goccia in stagno". |
+
