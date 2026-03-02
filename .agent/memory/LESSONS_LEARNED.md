@@ -9,6 +9,13 @@ prune_strategy: remove_oldest_when_full
 
 > **Regola:** Dopo ogni errore risolto, AGGIUNGI un entry qui. Max 50 entries, poi rimuovi il più vecchio.
 
+## [2026-03-02] Declaring "Done" on background tasks without `command_status` or side-effect verification
+- **Error:** Declared a git commit successful after launching `smart_commit.py` in the background, without ever waiting for its termination or checking `git status`. The command had actually failed completely.
+- **Root Cause:** Blind trust in fire-and-forget background processes instead of verifying the actual side-effects (e.g., checking git status or process exit code) before notifying the user.
+- **Fix:** ALWAYS wait for important terminal commands to complete or actively check their side-effects before marking a task `[x]` or notifying the user. "Lanciare non significa aver fatto".
+- **Rule violated:** `task-tracking.md` (Verifica con PID effettivo & NON dichiarare fatto senza verifica).
+- **Severity:** 🔴 Critical
+
 ## [2026-02-21] Blind Trust in OpenCode Autonomous Execution
 - **Error:** Delegated task to OpenCode and assumed success just because it returned exit code 0.
 - **Root Cause:** Failed to act as a Supervisor. OpenCode hallucinated a non-existent model (`gpt-5.2-codex`) in configs and wrote flawed bash logic that exited 1 if PATH wasn't updated instantly.
