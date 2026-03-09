@@ -99,6 +99,24 @@
 
 ---
 
+## Phase 24 — Perfecting Morph Animation Timings (Tween vs Spring)
+> **🎯 Supervisore:** `@frontend-specialist`
+> **Obiettivo:** Ottimizzare la transizione in `MobileIdentityBar.tsx` scartando la fisica "spring" di default a favore di un'animazione "tween" lineare e fluida. Sincronizzare gli elementi ausiliari.
+> **Perché:** La fisica *spring* (molla elastica) provocava un "wobbling" visivo alla fine dell'espansione, rompendo l'illusione ottica per cui la piccola icona circolare si stirava in una card squadrata.
+
+### 24.1. Sostituzione Fisica Framer Motion (Spring -> Tween)
+- [x] Modificare le transizioni di `MobileIdentityBar.tsx`:
+  - Nel bottone collassato e nel card-container espanso: rimpiazzare `spring` con `transition={{ duration: 0.35, type: "tween", ease: "easeInOut" }}`.
+  - Sincronizzare il backdrop: portarlo da durate separate a `transition={{ duration: 0.35, ease: "easeInOut" }}`.
+  - Perfezionare la scomparsa del bottone `X`: `transition={{ duration: 0.2, delay: 0.15, ease: "easeOut" }}`.
+  - **Agente:** `@frontend-specialist`
+  - **DoD:** Tutte le transizioni corrispondono linearmente a 0.35ms (tranne fade out istantanei) e il wobbling scompare completamente.
+
+### 24.2. Pre-flight Validation & Atomic Commit
+- [x] Validare e pusheare.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
