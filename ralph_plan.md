@@ -197,20 +197,19 @@
 
 ---
 
-## Phase 29 — Premium LED Node Glow
+## Phase 29 — Premium Apple-Style Node Glow
 > **🎯 Supervisore:** `@frontend-specialist`
-> **Obiettivo:** Trasformare l'attuale pulsing del nodo timeline in un effetto "LED reale", premium ed organico, introducendo multipli layer di diffusione e saturazione.
-> **Perché:** Per restituire un feedback visivo ad alto budget (astonish look), distanziandosi da una classica animazione piatta.
+> **Obiettivo:** Trasformare il semplice pulse del nodo della timeline in un effetto "Apple-level" premium, multistrato e tridimensionale.
+> **Perché:** Per dare all'UI un touch and feel da sito di altissima gamma ("astonishingly good"). L'animazione base a un solo livello di shadow è economica visivamente.
 
-### 29.1. Upgrade `@keyframes` in Premium LED
+### 29.1. Upgrade Keyframes Multi-layer
 - [x] Modificare `_experience.scss`:
-  - Riscrivere `@keyframes exp-node-pulse` con molteplici stadi (es. 0%, 40%, 100%).
-  - Utilizzare un core bianco al picco d'intensità (`100%`) per simulare il "white hot" o surriscaldamento del LED.
-  - Stratificare i `box-shadow` per ottenere un'ampia corona glow e un core luminoso.
-  - Inserire minimi ritocchi di `transform: scale()` e `filter: brightness()` per creare un effetto di respiro fisico.
+  - Aggiungere al `@keyframes exp-node-pulse` un'animazione complessa su 3 livelli di `box-shadow` sovrapposti (core glow, mid glow, ambient glow).
+  - Introdurre una sottile trasformazione `scale(1) -> scale(1.15)` per il feeling tattile del "battito".
+  - Regolare l'animazione per fluire dolcemente senza `alternate`, gestendo il respiro circolare `0% -> 50% -> 100%`.
 
 ### 29.2. Pre-flight Validation & Atomic Commit
-- [x] Validare il target LED e committare il risultato.
+- [x] Validare e pusheare le modifiche premium.
 
 ---
 
