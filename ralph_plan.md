@@ -197,15 +197,16 @@
 
 ---
 
-## Phase 29 — Refining Experience Node Pulse Animation
+## Phase 29 — Premium Timeline Node Pulse
 > **🎯 Supervisore:** `@frontend-specialist`
-> **Obiettivo:** Rendere l'animazione di respiro (`exp-node-pulse`) del nodo attivo più veloce e meno invadente (15-20% in meno di estensione del glow).
-> **Perché:** Per un effetto più rifinito ed equilibrato che non sia troppo vistoso o distraente.
+> **Obiettivo:** Trasformare il semplice pulse del nodo in un effetto glow multi-livello "premium/expensive" in stile neon organico.
+> **Perché:** L'aggiunta di step intermedi, shadow espansive (ring spreading) e variazioni di luminosità rende le micro-interazioni molto più lussuose e tattili.
 
-### 29.1. Regolazione SCSS (Speed & Spread)
+### 29.1. Upgrade `@keyframes exp-node-pulse`
 - [x] Modificare `_experience.scss`:
-  - Ridurre la durata in `animation` da `2.5s` a `1.8s`.
-  - Ridurre diffusione e opacità massima (100% nel `@keyframes`) da `box-shadow: 0 0 24px 8px rgba(color(cta), 0.8);` a `box-shadow: 0 0 18px 5px rgba(color(cta), 0.7);` per confinarlo alla percentuale richiesta.
+  - Arricchire `@keyframes exp-node-pulse` con 5 step (0%, 20%, 50%, 80%, 100%).
+  - Introdurre doppie ombre (`box-shadow`) per creare una base fissa più un anello che si espande e dissolve (effetto onda/ripple morbido).
+  - Aggiungere `filter: brightness()` per mimare il surriscaldamento del colore al picco dell'animazione.
 
 ### 29.2. Pre-flight Validation & Atomic Commit
 - [x] Validare e pusheare tramite protocollo standard.
