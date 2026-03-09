@@ -278,6 +278,52 @@
   ```
   - **DoD:** Commit pushato. Build verde post-commit.
 
+# 🚀 Phase 19: Layout Harmony & Top-Right Navigation
+> **Obiettivo:** Ottenere un layout più arioso su Desktop, spostare la navigazione in alto a destra, limitare la larghezza consentita degli elementi testuali per una leggibilità premium e garantire il perfetto allineamento verticale.
+
+### 19.1 Desktop Navigation Top-Right
+> **Agente:** `@frontend-specialist` | Skills: `frontend-design`, `react-patterns`, `css-architecture`
+
+- [x] In `_grid.scss` e `_section-nav.scss` (o relativi Styled Components):
+  - Rimuovere la dipendenza di `SectionNav` dalla sidebar fissa di sinistra (`.pf-sidebar`).
+  - Creare un nuovo contenitore per la nav desktop con `position: fixed`, `top: space(lg)`, `right: space(xl)`, `z-index: 50`.
+  - Passare `SectionNav` a un flex layout orizzontale (`display: flex`, `flex-direction: row`, `gap: space(md)`).
+  - Aggiungere un leggero backdrop blur (`backdrop-filter: blur(8px)`) e un background semi-trasparente al nav container per garantire leggibilità quando passa sopra i contenuti in scroll.
+  - Aggiornare gli stili di *active state* (es. linea sotto il testo o highlight) per adattarli al nuovo orientamento orizzontale.
+  - **DoD:** Il menu Desktop si trova in alto a destra, è orizzontale, fluttua pulito sopra il resto e l'indicatore della sezione attiva funziona perfettamente.
+
+---
+
+### 19.2 Global Padding & Layout Rebalancing
+> **Agente:** `@frontend-specialist` | Skills: `frontend-design`
+
+- [x] In `_grid.scss`:
+  - Aumentare il padding laterale globale di `.pf-section-content` su Desktop per dare più respiro al layout (es. `padding-right: space(4xl)`, `padding-left: space(2xl)`).
+  - Impostare un `max-width` al container principale per evitare che su schermi ultrawide i contenuti si allunghino disperdendosi troppo.
+  - Verificare che la rimozione della nav a sinistra non alteri il posizionamento della barra orizzontale animata delle tecnologie (Marquee).
+  - **DoD:** Meno senso di "affollamento" laterale. Le sezioni hanno ampi margini (whitespace premium) e la struttura a griglia risulta bilanciata.
+
+---
+
+### 19.3 About Section: Typography & Vertical Alignment
+> **Agente:** `@frontend-specialist` | Skills: `frontend-design`
+
+- [x] In `AboutSection.tsx` o `_page.scss`:
+  - Ottimizzare la lettura: impostare una larghezza massima per il blocco di testo della bio (es. `max-width: 65ch`), aumentare leggermente il `line-height` (es. `1.6` o `1.7`) e il `font-size`.
+  - **Allineamento:** Assicurarsi che il container flex/grid che ospita la `ProfileCard` (sinistra) e il blocco di testo (destra) utilizzi `align-items: center`. Il centro del testo deve essere perfettamente allineato al centro della card, non alla sua parte superiore.
+  - **DoD:** Il testo della bio ha una lunghezza di riga comoda per l'occhio. Il blocco testuale non "galleggia" ma è perfettamente centrato verticalmente rispetto alla ProfileCard.
+
+---
+
+### 19.4 Visual QA & Responsive Validation
+> **Agente:** `@orchestrator` (Browser Subagent) | Skills: `webapp-testing`
+
+- [x] Browser subagent testing:
+  - Risoluzione 1440x900 (Desktop): Verificare che il menu in alto a destra non vada in overlap con altre fix z-index.
+  - Screenshot della sezione About per confermare le proporzioni bio/card e l'allineamento sull'asse Y.
+  - Check visivo della barra di scorrimento orizzontale (React, Next.js...): assicurarsi che non si sovrapponga in modo errato alla ProfileCard.
+  - Check Mobile/Tablet: Verificare che i cambiamenti Desktop non abbiano causato regressioni e che la navigazione mobile (es. hamburger menu) funzioni regolarmente.
+  - **DoD:** Layout premium confermato, asimmetrie risolte, nav raggiungibile in alto a dx senza danni alle view mobile.
 ---
 
 ## Processi Attivi
