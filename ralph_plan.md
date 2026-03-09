@@ -197,19 +197,20 @@
 
 ---
 
-## Phase 29 — Premium Timeline Node Pulse
+## Phase 29 — Premium LED Node Glow
 > **🎯 Supervisore:** `@frontend-specialist`
-> **Obiettivo:** Trasformare il semplice pulse del nodo in un effetto glow multi-livello "premium/expensive" in stile neon organico.
-> **Perché:** L'aggiunta di step intermedi, shadow espansive (ring spreading) e variazioni di luminosità rende le micro-interazioni molto più lussuose e tattili.
+> **Obiettivo:** Trasformare l'attuale pulsing del nodo timeline in un effetto "LED reale", premium ed organico, introducendo multipli layer di diffusione e saturazione.
+> **Perché:** Per restituire un feedback visivo ad alto budget (astonish look), distanziandosi da una classica animazione piatta.
 
-### 29.1. Upgrade `@keyframes exp-node-pulse`
+### 29.1. Upgrade `@keyframes` in Premium LED
 - [x] Modificare `_experience.scss`:
-  - Arricchire `@keyframes exp-node-pulse` con 5 step (0%, 20%, 50%, 80%, 100%).
-  - Introdurre doppie ombre (`box-shadow`) per creare una base fissa più un anello che si espande e dissolve (effetto onda/ripple morbido).
-  - Aggiungere `filter: brightness()` per mimare il surriscaldamento del colore al picco dell'animazione.
+  - Riscrivere `@keyframes exp-node-pulse` con molteplici stadi (es. 0%, 40%, 100%).
+  - Utilizzare un core bianco al picco d'intensità (`100%`) per simulare il "white hot" o surriscaldamento del LED.
+  - Stratificare i `box-shadow` per ottenere un'ampia corona glow e un core luminoso.
+  - Inserire minimi ritocchi di `transform: scale()` e `filter: brightness()` per creare un effetto di respiro fisico.
 
 ### 29.2. Pre-flight Validation & Atomic Commit
-- [x] Validare e pusheare tramite protocollo standard.
+- [x] Validare il target LED e committare il risultato.
 
 ---
 
