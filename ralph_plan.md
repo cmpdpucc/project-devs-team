@@ -166,6 +166,21 @@
 
 ---
 
+## Phase 27 — Faster BlurSlider Transitions
+> **🎯 Supervisore:** `@frontend-specialist`
+> **Obiettivo:** Aumentare la velocità di scorrimento laterale delle slide all'interno del componente BlurSlider (Projects), per renderlo più scattante e reattivo.
+> **Perché:** I precedenti 1.5s di transizione causavano una lentezza percepita (sluggishness) che contrastava con le animazioni rapide del resto del sito, ostacolando la UX se un utente vuole sfogliare rapidamente i progetti.
+
+### 27.1. Aggiornamento Timing Swiper & CSS
+- [x] Modificare `BlurSlider/index.tsx`: ridurre il paramentro `speed` da `1500` a `800`.
+- [x] Modificare `_blur-slider.scss`: aggiornare il token `--bs-transition-duration` da `1.5s` a `0.8s`.
+- [x] Aggiornare eventuali delay connessi (se presenti) per mantenere la sincronia.
+
+### 27.2. Pre-flight Validation & Atomic Commit
+- [x] Validazione di codice e commit.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
