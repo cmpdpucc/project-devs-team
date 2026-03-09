@@ -197,6 +197,21 @@
 
 ---
 
+## Phase 29 — Refining Experience Node Pulse Animation
+> **🎯 Supervisore:** `@frontend-specialist`
+> **Obiettivo:** Rendere l'animazione di respiro (`exp-node-pulse`) del nodo attivo più veloce e meno invadente (15-20% in meno di estensione del glow).
+> **Perché:** Per un effetto più rifinito ed equilibrato che non sia troppo vistoso o distraente.
+
+### 29.1. Regolazione SCSS (Speed & Spread)
+- [x] Modificare `_experience.scss`:
+  - Ridurre la durata in `animation` da `2.5s` a `1.8s`.
+  - Ridurre diffusione e opacità massima (100% nel `@keyframes`) da `box-shadow: 0 0 24px 8px rgba(color(cta), 0.8);` a `box-shadow: 0 0 18px 5px rgba(color(cta), 0.7);` per confinarlo alla percentuale richiesta.
+
+### 29.2. Pre-flight Validation & Atomic Commit
+- [x] Validare e pusheare tramite protocollo standard.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
