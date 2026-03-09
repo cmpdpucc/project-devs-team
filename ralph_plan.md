@@ -181,6 +181,22 @@
 
 ---
 
+## Phase 28 — Experience Timeline Active Node Pulse
+> **🎯 Supervisore:** `@frontend-specialist`
+> **Obiettivo:** Animare con un "respiro" (pulse/glow) continuo le icone/nodi circolari della timeline dell'experience una volta che sono stati raggiunti dallo spark.
+> **Perché:** Una volta che l'animazione d'ingresso termina, i nodi statici perdono attrattiva visiva. Un glowing sottile e continuo rende la componente "viva".
+
+### 28.1. Implementazione `@keyframes` in SCSS
+- [x] Modificare `_experience.scss`:
+  - Definire un `@keyframes exp-node-pulse` che varia l'intensità del `box-shadow` usando il token del colore CTA.
+  - Applicare l'animazione a `.pf-exp-timeline__node-dot--active`.
+  - Usare un `delay` di `1.2s` sull'inizio dell'animazione, per permettere alla transizione iniziale del trigger (che dura 700ms con un delay di 500ms) di completarsi fluidamente senza scatti.
+
+### 28.2. Pre-flight Validation & Atomic Commit
+- [x] Validare e pusheare tramite protocollo standard.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
