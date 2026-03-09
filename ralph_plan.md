@@ -81,6 +81,24 @@
 
 ---
 
+## Phase 23 — Enlarge Mobile Identity Pill
+> **🎯 Supervisore:** `@frontend-specialist`
+> **Obiettivo:** Ingrandire la pillola dell'identità mobile di un ~30% mantenendone le giuste proporzioni interne (avatar, font e padding).
+> **Perché:** Per migliorare la leggibilità e l'usabilità (touch target) su schermi mobile.
+
+### 23.1. Upscale SCSS Dimensioni (.pf-mobile-identity)
+- [x] Modificare `_mobile-identity.scss`:
+  - Incrementare `font-size` da `0.85rem` a `1.15rem` (~+35%).
+  - Incrementare avatar `width/height` da `32px` a `44px` (~+37.5%).
+  - Allargare il padding e il gap interno usando i token spaziali superiori (`space(sm)` per i bordi interni e `space(lg)` per destro).
+  - **Agente:** `@frontend-specialist`
+  - **DoD:** Il bottone collassato è visivamente un terzo più grande senza sembrare sformato.
+
+### 23.2. Pre-flight Validation & Atomic Commit
+- [x] Validare e pusheare.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
