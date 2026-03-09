@@ -54,6 +54,33 @@
 
 ---
 
+## Phase 22 — Perfecting Mobile Morph Overlay & Timings
+> **🎯 Supervisore:** `@orchestrator` (skills: `parallel-agents`, `behavioral-modes`)
+> **Obiettivo:** Perfezionare la trasparenza dello sfondo e i tempi di apparizione/sparizione degli elementi ancillari (il bottone di chiusura) durante il morphing Framer Motion.
+> **Perché:** Attualmente lo sfondo nero .85 è troppo opaco e annulla il senso di "elevazione" tramite blur. Inoltre, la 'X' appare a scatto e indugia troppo alla chiusura, rovinando l'illusione di fluidità.
+
+### 22.1. Regolazione Trasparenza Backdrop (SCSS)
+- [x] Modificare `_mobile-identity.scss`:
+  - Abbassare l'alpha del background di `__backdrop` (es. `rgba(5, 10, 20, 0.4)` o simile) per garantire che il `blur()` possa operare sulla traslucenza e mostrare gli elementi sottostanti della pagina.
+  - **Agente:** `@frontend-specialist` | Skills: `ui-ux-pro-max`, `frontend-design`
+  - **DoD:** Il CSS dello sfondo risulta sufficientemente trasparente da abilitare il vero effetto vetro scuro.
+
+### 22.2. Temporizzazione Framer Motion del Bottone Close
+- [x] Modificare la chiusura in `MobileIdentityBar.tsx`:
+  - Sostituire il `<button>` standard con un `<motion.button>`.
+  - Applicare entrata `initial={{ opacity: 0 }}` e `animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.1 } }}` per una comparsa gentile.
+  - **CRITICO:** Applicare uscita `exit={{ opacity: 0, transition: { duration: 0.15 } }}` in modo che sparisca molto più velocemente dei 0.4s necessari alla card per richiudersi, evitando che "voli in giro" mentre la modal collassa.
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`
+  - **DoD:** Il bottone di chiusura ha fade in/out controllati e scompare prima che la card si chiuda.
+
+### 22.3. Pre-flight Validation & Atomic Commit
+- [x] Validare il codice prodotto ed effettuare il commit.
+  - Eseguire `python .agent/scripts/pre_flight.py` e commit.
+  - **Agente:** `@devops-engineer`
+  - **DoD:** Modifiche pushate sul main con successo.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
