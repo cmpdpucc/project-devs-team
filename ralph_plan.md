@@ -135,6 +135,37 @@
 
 ---
 
+## Phase 26 — Mobile Experience Timeline Visibility
+> **🎯 Supervisore:** `@frontend-specialist`
+> **Obiettivo:** Creare continuità visiva tra la versione desktop e mobile della sezione Experience, rendendo la timeline e i "nodi" visibili anche su mobile, riposizionando il layout.
+> **Perché:** Su schermi piccoli, nascondere la linea causava la perdita dell'animazione "NodeSpark" e spezzava il contesto visivo della timeline cronologica.
+
+### 26.1. SCSS Mobile Repositioning Timeline Line
+- [x] Modificare `_experience.scss` (`.pf-exp-timeline__line`):
+  - Rimuovere `display: none`.
+  - Impostare stile base: `display: block`, `position: absolute`, `left: 24px` su mobile.
+  - Spostare i gradienti e transform block al livello base.
+  - Dentro `@media (min-width: 64em)` rimettere `left: 50%`.
+
+### 26.2. SCSS Mobile Repositioning Connector Node
+- [x] Modificare `_experience.scss` (`.pf-exp-timeline__connector`):
+  - Rimuovere `display: none`.
+  - Impostare stile base: `display: block`, `position: absolute`, `left: 24px`, e soprattutto `top: 40px` (per allinearsi al Job Title compensando le tag soprastanti).
+  - Dentro `@media (min-width: 64em)` ripristinare `left: 50%` e `top: 24px`.
+
+### 26.3. SCSS Content Spacing 
+- [x] Modificare `_experience.scss` (`.pf-exp-timeline__item`):
+  - Aggiungere `padding-left: 56px` base (mobile) per spingere il testo e il terminal lontano dalla linea, prevenendo over-lap palesi.
+  - Inserire `padding-left: 0` dentro `@media (min-width: 64em)` per non rompere il layout a griglia desktop.
+
+### 26.4. Visual Verification (Browser Subagent)
+- [x] Il browser subagent aprirà la webapp e scatterà screenshot a viewport incrementali, testando l'assenza di sovrapposizione e la centratura dei dot NodeSpark.
+
+### 26.5. Pre-flight Validation & Atomic Commit
+- [x] Validazione di build e commit pulito tramite `smart_commit.py`.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
