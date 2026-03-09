@@ -117,6 +117,24 @@
 
 ---
 
+## Phase 25 — Fixing Layout Thrashing (Scale vs Morph)
+> **🎯 Supervisore:** `@frontend-specialist`
+> **Obiettivo:** Risolvere la distorsione visiva (layout thrashing) e il clipping del glow della ProfileCard sostituendo l'approccio `layoutId` (Shared Element) con transizioni classiche di scale e opacità.
+> **Perché:** L'utilizzo del `layoutId` costringeva all'uso di `overflow: hidden` e unificava strutture DOM troppo complesse (la pillola semplice vs la ProfileCard 3D tiltabile con i glow out-of-bounds). Lo switch alla transizione scale permette apparizioni fluide mantenendo i layer intatti.
+
+### 25.1. Rimozione layoutId e Sostituzione Transizioni
+- [x] Modificare `MobileIdentityBar.tsx`:
+  - Rimuovere i `layoutId` da `<motion.button>` e `<motion.div className="pf-mobile-identity__card-container">`.
+  - Introdurre le animazioni di entrata `scale` e `opacity` custom fornite dall'utente.
+  - Sbloccare l'overflow eliminando lo style inline per ridare vita al bagliore posteriore (Glow) della card.
+  - **Agente:** `@frontend-specialist`
+  - **DoD:** Il file viene aggiornato esattamente con i blocchi proposti rimuovendo ogni conflitto di morphing.
+
+### 25.2. Pre-flight Validation & Atomic Commit
+- [x] Validare le modifiche e inviare un commit atomico loggato.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
