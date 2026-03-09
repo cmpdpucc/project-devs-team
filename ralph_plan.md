@@ -6,25 +6,13 @@
 
 ---
 
-## LEGACY — Fasi Completate (0-18)
+## LEGACY — Fasi Completate (0-19)
 
 <details>
 <summary>✅ Click per espandere le fasi legacy già completate</summary>
 
-- **Fasi 0-5**: Init, DB, API, UI, QA (Trip-planner base)
-- **Fase 6**: Deploy & Osservabilità
-- **Fasi 7-12**: Features & Polish (Trip-planner completo)
-- **Fase A0**: Golden Stack & Monorepo Migration (Turborepo)
-- **Fase A0.3**: AI Gateway — Custom Implementation
-- **Fase 6 (Self-Enhancement)**: Progress Dashboard & /status workflow
-- **Phase 1**: OpenCode Setup (Install, Config, Docs)
-- **Phase 7**: OpenCode Multi-Agent Bridge
-- **Phase 8**: The "Infinity" Stack (Kimi 2.5 Visual Workflow)
-- **Phase 9**: Portfolio Research & Design Discovery
-- **Phase 10**: UI/UX Pro Max & SCSS Refactoring
-- **Phase 16**: Mobile Responsive, Floating Nav & UX Audit
-- **Phase 17**: PixelCard Canvas Ripple Animation
-- **Phase 18**: ProjectShowcase Redesign (BlurSlider 2.0)
+- **Fasi 0-18**: Init, DB, API, UI, Deploy, AI Gateway, Progress Dashboard, OpenCode Setup, Multi-Agent Bridge, Visual Workflow, UX Pro Max, SCSS Refactoring, Mobile Floating Nav, PixelCard Canvas, BlurSlider 2.0
+- **Phase 19**: Global Grid Layout Redesign (Option A: True CSS Grid & Max-Width 1750px)
 </details>
 
 ---
@@ -38,47 +26,44 @@
 
 ---
 
-## Phase 19 — Global Grid Layout Redesign (Option A: True CSS Grid)
+## Phase 20 — Mobile Identity Bar Shared Layout Animation (Option A)
 > **🎯 Supervisore:** `@orchestrator` (skills: `parallel-agents`, `behavioral-modes`)
-> **Obiettivo:** Effettuare il refactoring del master layout (attualmente Flex + Sidebar Assoluta con padding di offset) verso una vera e pura **CSS Grid a 2 Colonne (`1fr`)**.
-> **Perché:** Per garantire un posizionamento matematicamente perfetto e un bounding box sicuro dove Flexbox centri i contenuti delle sezioni senza margini laterali "sporchi".
+> **Obiettivo:** Trasformare l'attuale pillola mobile-identity fissa in alto a sinistra in un bottone fluido che, tramite Framer Motion `layoutId`, si "espande" visivamente diventando la ProfileCard a tutto schermo.
+> **Perché:** Per donare un "effetto wow" nativo stile-app e rimuovere il costrutto rudimentale del pop-up modale improvviso.
 
-### 19.1. Preparation & Cleanup (Code Archaeology)
-- [x] Rimuovere posizionamenti assoluti e workaround flexbox obsoleti in `_grid.scss`:
-  - Rimuovere `position: absolute;`, `top: 0;`, `left: 0;`, `z-index: 20;` da `.pf-sidebar`.
-  - Rimuovere `width: 100vw;` da `.pf-scroll-container`.
-  - Rimuovere il workaround `padding-left: calc(var(--sidebar-width) + space(xl));` da `.pf-section-content`.
-  - **Agente:** `@code-archaeologist` | Skills: `clean-code`, `frontend-design`
-  - **DoD:** Nessun posizionamento assoluto sulla sidebar o hack di padding-left presenti nei file SCSS.
+### 20.1. Struttura Framer Motion & LayoutId Hooks
+- [x] Refactoring strutturale di `MobileIdentityBar.tsx` per supportare una Root `<AnimateSharedLayout>` (o nativamente Framer Motion 10+ standard).
+  - Aggiungere `layoutId="profile-container"` sia al bottone originario che al wrapper modale della ProfileCard.
+  - Verificare se l'avatar nel bottone e nella ProfileCard possono condividere `layoutId="profile-avatar"` aggirando la stratificazione 3D di `ProfileCard.tsx`. Altrimenti, l'espansione del solo container generale funzionerà come trucco ottico eccellente.
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`, `ui-ux-pro-max`
+  - **DoD:** Entità logiche pronte per lo shared element morphing. Nessun errore di TypeScript (risolto `AnimatePresence`).
 
-### 19.2. Desktop Grid Architecture Implementation
-- [x] Trasformare `.pf-layout` in una griglia per Desktop:
-  - Applicare `display: grid; grid-template-columns: var(--sidebar-width) 1fr;` a `.pf-layout`.
-  - Garantire che `.pf-scroll-container` e `.pf-sidebar` si posizionino naturalmente nelle rispettive colonne.
-  - Aggiungere `min-width: 0;` al `.pf-scroll-container` per evitare overflow orizzontali in caso di contenuti full-bleed (come il BlurSlider).
-  - Aggiungere vincolo globale `max-width: 1750px` al layout per schermi ultrawide e centrare la struttura nel `body`.
-  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`, `react-patterns`
-  - **DoD:** Il layout Desktop 1440px è una vera griglia. I contenuti di ogni sezione (es. Hero, Experience, Projects) sono perfettamente centrati nello spazio `1fr`.
+### 20.2. Component Morphing (Bottone -> ProfileCard)
+- [x] Implementazione logica del Morphing:
+  - Il bottone `.pf-mobile-identity` si trasforma diventando il background `.pf-mobile-identity__card-container`.
+  - La chiusura spara l'espansione invertita.
+  - **Agente:** `@mobile-developer` | Skills: `react-patterns`, `mobile-design`
+  - **DoD:** Cliccando la pillolina, il contenitore cresce proporzionalmente riempiendo lo schermo, invece di una cross-fade.
 
-### 19.3. Responsive Stack Adaptation (Tablet/Mobile)
-- [x] Gestire il fallback a colonna per schermi `< 64em` (Tablet & Mobile):
-  - Mantenere o ripristinare `display: flex; flex-direction: column;` (oppure `grid-template-columns: 1fr;`) al `.pf-layout` su breakpoint mobili.
-  - Preservare le safe areas verticali preesistenti (`padding: 7rem space(lg)`) per non collidere con navbar mobili e identity bar.
-  - **Agente:** `@mobile-developer` | Skills: `mobile-design`, `frontend-design`
-  - **DoD:** Emulazioni a 375px e 768px caricano una singola colonna senza anomalie, contenuti sovrapposti o bleeding orizzontale.
+### 20.3. Visual Polish & Overlay CSS
+- [x] Finiture visive su SCSS (`_mobile-identity.scss`):
+  - Il layer scuro dietro la modale entra in cross-fade con `opacity` pura indipendente dal layout condiviso.
+  - Mantenere e fixare z-index ed overflow del contenitore in modo che la `ProfileCard` animata scali senza glitcheggiare.
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`
+  - **DoD:** La transizione entra ed esce in 0.4s fluidamente, senza salti CSS di bordo o di testo troncato.
 
-### 19.4. Visual Quality Assurance (All Breakpoints)
-- [x] Eseguire un audit visivo su breakpoint chiave: 1440px, 768px, 375px.
-  - Verificare che Slider, Timeline e About siano perfettamente centrati rispetto all'area visibile residua al netto della sidebar.
+### 20.4. Visual QA via Browser Subagent
+- [x] Verificare il funzionamento del tap tramite navigatore automatico mobile a schermo `375x812`.
+  - Simulare click su `.pf-mobile-identity`, scattare foto del fullscreen state, e click sulla croce di chiusura.
   - **Agente:** `@orchestrator` (Browser Subagent) | Skills: `webapp-testing`
-  - **DoD:** Screenshot catturati dal subagent mostrano allineamento ottico esatto a 1440px (Desktop), layout full-width scalato a 768px (Tablet) e 375px (Mobile). *(Note: Assessed structurally via Code Review due to subagent 503 capacity limit)*
+  - **DoD:** Screenshot finali confermano assenza di glitch, corretto mounting z-index e fluidità di Framer Motion.
 
-### 19.5. Pre-flight Validation & Atomic Commit
+### 20.5. Pre-flight Validation & Atomic Commit
 - [x] Validare il codice prodotto ed effettuare il commit tracciabile di chiusura fase.
-  - Eseguire `python .agent/scripts/pre_flight.py --gate build` e i test connessi.
-  - Effettuare commit atomico per marcare il termine di Phase 19.
-  - **Agente:** `@devops-engineer` | Skills: `deployment-procedures`, `version-control`
-  - **DoD:** Script di pre-flight restituisce `exit 0`. Eseguito `smart_commit.py` con type `refactor`.
+  - Eseguire `python .agent/scripts/pre_flight.py --gate build,tests`
+  - Effettuare commit atomico.
+  - **Agente:** `@devops-engineer` | Skills: `deployment-procedures`
+  - **DoD:** Script restituisce `exit 0` con type `feat` o `refactor`.
 
 ---
 
@@ -94,6 +79,6 @@
 
 | Timestamp | Decisione | Motivazione |
 |-----------|-----------|-------------|
-| 2026-03-09 17:10 | **Nuovo Ralph Plan Phase 19 (Grid Layout)** | Sostituzione root Flex/Absolute con CSS Grid nativa (Option A); allarga le colonne su `1fr` e rimuove padding compensation per centramento infallibile. |
+| 2026-03-09 18:55 | **Nuovo Ralph Plan Phase 20 (Identity Bar)** | Implementazione Option A via Framer Motion `layoutId` per animare dal minuscolo bottone MobileIdentityBar verso la gigantesca ProfileCard. Shared morphing per evitare glitch della struttura React Bits orginale all'interno. |
 
-> **📊 Phase 19:** 5 task atomici | **Agenti:** 5 (`@code-archaeologist`, `@frontend-specialist`, `@mobile-developer`, `@orchestrator`, `@devops-engineer`) | **Skills:** 6 (`clean-code`, `frontend-design`, `react-patterns`, `mobile-design`, `webapp-testing`, `deployment-procedures`)
+> **📊 Phase 20:** 5 task atomici | **Agenti:** 4 (`@frontend-specialist`, `@mobile-developer`, `@orchestrator`, `@devops-engineer`) | **Skills:** 5 (`react-patterns`, `ui-ux-pro-max`, `mobile-design`, `webapp-testing`, `deployment-procedures`)
