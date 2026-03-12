@@ -342,7 +342,7 @@
   - **DoD:** Desktop renderizza identicamente alla versione pre-Phase 31.
 
 ### 31.7. Verifica Visuale (Browser Subagent)
-- [ ] Verificare con il browser subagent:
+- [/] Verificare con il browser subagent: *(Browser Subagent 503 — verifica manuale delegata all'utente)*
   - Desktop: /about mostra navBar visibile con bordo distinguibile
   - Mobile (390px): squircle 60×60 in alto a destra, click → side panel con card colorate
   - Click link in card → naviga + chiude il pannello
@@ -351,11 +351,26 @@
   - **DoD:** Screenshot multi-viewport confermano funzionamento corretto.
 
 ### 31.8. Pre-flight Validation & Atomic Commit
-- [ ] Validare e committare:
+- [x] Validare e committare:
   - `python .agent/scripts/pre_flight.py --gate build`
   - Commit: `feat(nav): fix /about visibility + add vertical squircle mobile mode`
   - **Agente:** `@devops-engineer` | Skills: `deployment-procedures`
   - **DoD:** Build OK. Commit atomico pushato.
+
+### 31.9. IdentityBar su Mobile (Independent Overlay)
+- [x] Estrarre `IdentityBar` fuori dal container `.pf-nav-card-bar--vertical` su mobile:
+  - Condizionalmente renderizzare `IdentityBar` in un div wrapper `.pf-nav-card-bar__mobile-identity` con `z-index: 60` quando `orientation === vertical`.
+  - Nasconderlo all'interno di `__left` (o renderizzarlo solo quando `horizontal`).
+  - Posizionarlo `top: 1rem; left: 1rem; position: fixed` in SCSS in modo simmetrico al squircle.
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`, `ui-ux-pro-max`
+  - **DoD:** La barra avatar è visibile in alto a sinistra su mobile, rimane sopra il layer di espansione del menu.
+
+### 31.10. IdentityBar Mobile Alignment Fix
+- [x] Centrare verticalmente l'IdentityBar su mobile per allinearla perfettamente con il bottone chiudi hamburger:
+  - SCSS: Applicare `height: 60px; display: flex; align-items: center;` al wrapper `.pf-nav-card-bar__mobile-identity` per simulare l'ingombro del squircle e centrare il pill verticalmente all'altezza corretta.
+  - TSX: Nessuna modifica, il wrapper è già a DOM.
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`, `ui-ux-pro-max`
+  - **DoD:** La IdentityBar è visivamente allineata al centro esatto dell'area occupata dal close button / hamburger su mobile.
 
 ---
 
