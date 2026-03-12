@@ -213,6 +213,152 @@
 
 ---
 
+## Phase 30 — NavCard Visual Feature Merge
+> **🎯 Supervisore:** `@frontend-specialist` (skills: `react-patterns`, `ui-ux-pro-max`, `frontend-design`)
+> **Obiettivo:** Importare tutta la bellezza visiva, fluidità e customizzabilità del vecchio componente `NavCard.tsx` (in `to-be-deleted/`) dentro il componente corrente `NavigationCardBar.tsx`, senza rompere nessuna funzionalità esistente (hover/click open, IdentityBar, GooeyNav, Framer Motion, frosted glass).
+> **Perché:** Il vecchio `NavCard` ha un sistema di card colorate con `bgColor`/`textColor` per-card, arrow-icon sui link, stagger animation e stili ricchi (border-radius, padding, flex layout) che mancano nel `NavigationCardBar` corrente, il quale ha solo sezioni plain con titoli e link unstyled.
+
+### 30.1. Analisi Differenziale & Strategia di Merge
+- [x] Documentare le differenze chiave tra i due componenti e definire la strategia:
+  - **Da importare:** Card colorate configurable, ArrowUpRightIcon SVG, stagger animation (Framer Motion variants), rich card styling, link hover effects
+  - **Da NON importare:** GSAP engine (manteniamo Framer Motion), orientamento verticale/squircle, logo image (manteniamo IdentityBar), CTA button
+  - **Da preservare intatto:** IdentityBar, GooeyNav, hamburger, hover/click/click-outside logic, frosted glass, scroll detection
+  - **Agente:** `@frontend-specialist` | Skills: `architecture`, `react-patterns`
+  - **DoD:** Strategia di merge confermata dall'utente, nessun dubbio architetturale.
+
+### 30.2. Definizione Dati `NAV_CARD_ITEMS` (Configurazione Data-Driven)
+- [x] Creare un array costante `NAV_CARD_ITEMS` in `NavigationCardBar.tsx`:
+  - Ogni item ha: `label` (string), `bgColor` (string), `textColor` (string), `links[]` con `{ label, href, ariaLabel }`
+  - Mappare le 3 sezioni attuali (Projects, Experience, About) ai colori e sub-link appropriati
+  - I link reali (`/projects`, `/experience`, `/about`) devono usare `<NavLink>` con `onClick={closeMenu}`
+  - I link placeholder mantengono `href="#"` con `preventDefault()`
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`, `clean-code`
+  - **DoD:** L'array `NAV_CARD_ITEMS` compila senza errori TypeScript, ogni campo è tipizzato (no `any`).
+
+### 30.3. Aggiunta `ArrowUpRightIcon` SVG Inline
+- [x] Aggiungere il componente `ArrowUpRightIcon` in `NavigationCardBar.tsx`:
+  - SVG inline identico a quello in `NavCard.tsx` (24x24 viewBox, stroke currentColor, strokeWidth 2)
+  - Nessuna dipendenza esterna (no `react-icons`)
+  - Usare `1em` per width/height per scalabilità automatica con il font-size del parent
+  - **Agente:** `@frontend-specialist` | Skills: `clean-code`
+  - **DoD:** L'icona appare a fianco di ogni link dentro le card, ereditando il colore dal parent.
+
+### 30.4. Riscrittura Expanded Content (Card Colorate + Stagger)
+- [x] Sostituire il contenuto attuale di `pf-nav-card-bar__expanded` con card colorate animate:
+  - Rimpiazzare le 3 `<div className="pf-expanded-content__section">` con un `map()` su `NAV_CARD_ITEMS`
+  - Ogni card è un `<motion.div>` con `variants` per stagger animation (`staggerChildren: 0.08`)
+  - Le card hanno `style={{ backgroundColor: item.bgColor, color: item.textColor }}` inline
+  - I link dentro ogni card usano `<NavLink>` (per route reali) con `<ArrowUpRightIcon />` prefix
+  - Il wrapper `pf-expanded-content` passa da `grid` a `flex` per card affiancate
+  - **CRITICO:** Preservare il `closeMenu()` su tutti i `NavLink` onClick
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`, `ui-ux-pro-max`
+  - **DoD:** Le card colorate appaiono con stagger animation, i link navigano e chiudono il menu.
+
+### 30.5. SCSS — Stili Card Ricchi (da `_nav-card.scss`)
+- [x] Aggiungere i nuovi stili in `_navigation-card-bar.scss`:
+  - `.pf-nav-card`: `flex: 1 1 0`, `border-radius: 0.6rem`, `padding: 16px 20px`, `display: flex`, `flex-direction: column`, `gap: 8px`, `user-select: none`
+  - `.pf-nav-card__label`: `font-weight: 500`, `font-size: 22px`, `letter-spacing: -0.5px`
+  - `.pf-nav-card__links`: `margin-top: auto`, `display: flex`, `flex-direction: column`, `gap: 6px`
+  - `.pf-nav-card__link`: `text-decoration: none`, `display: inline-flex`, `align-items: center`, `gap: 6px`, `color: inherit`, `font-size: 16px`, `transition: opacity 0.3s ease`, hover `opacity: 0.75`
+  - `.pf-expanded-content`: cambiare da `grid` a `display: flex` + `gap: 1rem`
+  - **Responsive mobile (≤64em):** card in `flex-direction: column`, padding ridotto `12px 16px`, `min-height: 60px`
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`, `ui-ux-pro-max`
+  - **DoD:** Le card appaiono con border-radius, padding, e font sizing identici al NavCard originale. I link hanno hover effect con opacità. Il layout è responsive.
+
+### 30.6. Verifica Visuale (Browser Subagent)
+- [x] Verificare con il browser subagent: *(Browser Subagent 503 — verifica visuale delegata all'utente)*
+  - La top bar (IdentityBar + GooeyNav + Hamburger) appare **identica** a prima
+  - Hover 3 secondi → menu expanded con **card colorate** + stagger animation
+  - Click hamburger → toggle menu come prima
+  - Click link dentro una card → naviga + chiude il menu
+  - Click fuori l'header → chiude il menu
+  - Resize ≤ 1024px → le card si stackano verticalmente
+  - Frosted glass effect invariato (scroll Home → sfondo sfocato)
+  - **Agente:** `@orchestrator` (Browser Subagent) | Skills: `webapp-testing`
+  - **DoD:** Screenshot confermano: card colorate con arrow icon, stagger fluido, chiusura funzionante, layout responsive mobile.
+
+### 30.7. Pre-flight Validation & Atomic Commit
+- [x] Validare il codice ed effettuare il commit tracciabile:
+  - Eseguire `python .agent/scripts/pre_flight.py --gate build`
+  - Commit atomico: `feat(nav): merge NavCard visual features into NavigationCardBar`
+  - **Agente:** `@devops-engineer` | Skills: `deployment-procedures`
+  - **DoD:** Build senza errori. Commit atomico registrato e pushato.
+
+---
+
+## Phase 31 — Fix /about NavBar Visibility + Vertical Mobile Squircle Mode
+> **🎯 Supervisore:** `@frontend-specialist` (skills: `react-patterns`, `ui-ux-pro-max`, `frontend-design`)
+> **Obiettivo:** (1) Risolvere il bug visivo della NavigationCardBar sulla pagina /about, dove il frosted glass si confonde con il background pagina rendendola invisibile. (2) Integrare la modalità verticale "squircle" dal vecchio NavCard per la versione mobile, con l'animazione del pannello laterale che si espande dal bottone 60×60.
+> **Perché:** (1) Il frosted glass `rgba(30,41,59,0.7)` è troppo simile a `--color-bg`, camuffando la barra su /about. (2) Su mobile l'attuale dropdown orizzontale è scomodo — il vecchio NavCard aveva un'UX mobile superiore con il squircle che si espandeva lateralmente, le card stackate verticalmente e scrollabili.
+
+### 31.1. Fix Visibilità NavBar su /about (SCSS)
+- [x] Correggere `_navigation-card-bar.scss`:
+  - Rendere il `border-bottom` dello stato `--scrolled` più visibile: da `rgba(255,255,255,0.05)` a `rgba(255,255,255,0.12)`
+  - Verificare che il contrasto sia sufficiente impostando un background leggermente più scuro/opaco rispetto alla page: `rgba(15, 23, 42, 0.85)` con backdrop blur più forte
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`
+  - **DoD:** La barra è visivamente distinguibile dal contenuto sottostante su tutte le pagine, incluso /about.
+
+### 31.2. Responsive Orientation State (TSX)
+- [x] Aggiungere logica orientamento in `NavigationCardBar.tsx`:
+  - State: `const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal')`
+  - `useEffect` con resize listener: `≤ 1024px` → `'vertical'`, altrimenti `'horizontal'`
+  - Cleanup al cambio orientamento: chiudere il menu se aperto, resettare gli state
+  - Applicare il modifier class `pf-nav-card-bar--vertical` quando `orientation === 'vertical'`
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`
+  - **DoD:** Lo state cambia correttamente al resize, il component si ri-renderizza con la class corretta.
+
+### 31.3. Vertical Squircle — Base SCSS
+- [x] Aggiungere gli stili per la modalità verticale in `_navigation-card-bar.scss`:
+  - `.pf-nav-card-bar--vertical`: `position: fixed`, `top: 1rem`, `right: 1rem`, `left: auto`, `width: 60px`, `height: 60px`, `border-radius: 20px`, `overflow: hidden`, reset di `backdrop-filter` e `border-bottom`
+  - `.pf-nav-card-bar--vertical __top`: ridirezionare in colonna con hamburger centrato nel 60×60
+  - Nascondere IdentityBar e GooeyNav in modalità verticale (solo hamburger visibile nel squircle chiuso)
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`, `ui-ux-pro-max`
+  - **DoD:** Su mobile appare un quadrato arrotondato 60×60 in alto a destra con solo l'hamburger visibile.
+
+### 31.4. Vertical Expand Animation (Framer Motion)
+- [x] Implementare l'animazione di espansione verticale in `NavigationCardBar.tsx`:
+  - Quando `orientation === 'vertical'` e menu aperto: il container si anima da `60×60` → `width: calc(100vw - 2rem)`, `height: 100vh` (o auto)
+  - Usare `motion.div` con `animate={{ width, height }}` e `transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}`
+  - Il layout interno passa a `flex-direction: row-reverse` (come il vecchio NavCard): hamburger a destra in colonna verticale, contenuto a sinistra
+  - L'hamburger resta sempre visibile nel suo slot 60px durante l'espansione
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`, `ui-ux-pro-max`
+  - **DoD:** L'animazione è fluida, il squircle si espande senza jank, e il menu mostra le card colorate.
+
+### 31.5. Vertical Cards Layout & Scrollable Content (SCSS + TSX)
+- [x] Configurare il layout delle card in modalità verticale:
+  - SCSS: `.pf-nav-card-bar--vertical .pf-expanded-content` → `flex-direction: column`, `gap: 12px`, `padding: 1.5rem`, `overflow-y: auto`, `overflow-x: hidden`, `::-webkit-scrollbar { display: none }`
+  - SCSS: `.pf-nav-card-bar--vertical .pf-nav-card` → `min-height: 120px`, `flex: 1 1 0`
+  - TSX: Le card mantengono lo stagger animation ma con `y: 50` → `y: 0` (scorrimento verticale vs orizzontale)
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`, `react-patterns`
+  - **DoD:** Le card si stackano verticalmente, sono scrollabili se eccedono l'altezza viewport, e l'animazione è coerente con l'orientamento.
+
+### 31.6. Desktop Layout Preservation (Guard)
+- [x] Verificare che NESSUN cambiamento impatti la modalità desktop:
+  - La barra orizzontale rimane `position: fixed; top: 0; left: 0; right: 0; height: 6.5rem`
+  - IdentityBar, GooeyNav, Hamburger → layout invariato
+  - Dropdown expand → invariato (AnimatePresence height auto)
+  - Hover 3s, click, click-outside → invariati
+  - **Agente:** `@frontend-specialist` | Skills: `react-patterns`
+  - **DoD:** Desktop renderizza identicamente alla versione pre-Phase 31.
+
+### 31.7. Verifica Visuale (Browser Subagent)
+- [ ] Verificare con il browser subagent:
+  - Desktop: /about mostra navBar visibile con bordo distinguibile
+  - Mobile (390px): squircle 60×60 in alto a destra, click → side panel con card colorate
+  - Click link in card → naviga + chiude il pannello
+  - Resize da mobile a desktop → transizione smooth senza glitch
+  - **Agente:** `@orchestrator` (Browser Subagent) | Skills: `webapp-testing`
+  - **DoD:** Screenshot multi-viewport confermano funzionamento corretto.
+
+### 31.8. Pre-flight Validation & Atomic Commit
+- [ ] Validare e committare:
+  - `python .agent/scripts/pre_flight.py --gate build`
+  - Commit: `feat(nav): fix /about visibility + add vertical squircle mobile mode`
+  - **Agente:** `@devops-engineer` | Skills: `deployment-procedures`
+  - **DoD:** Build OK. Commit atomico pushato.
+
+---
+
 ## Processi Attivi
 | PID | Tipo | Porta | Stato | Lanciato Da |
 |-----|------|-------|-------|-------------|
@@ -224,3 +370,5 @@
 | Timestamp | Decisione | Motivazione |
 |-----------|-----------|-------------|
 | 2026-03-09 19:15 | **Nuovo Ralph Plan Phase 21 (Polish Morph)** | Reso il fade del background `backdropFilter` indipendente dalla Shared Layout Animation del content, impedendo che l'`opacity: 0` iniziale sul root wrapper sopprimesse l'illusione framer motion. |
+| 2026-03-12 18:22 | **Phase 30 — NavCard Visual Feature Merge** | Importare le feature visive (card colorate, ArrowUpRightIcon, stagger animation, rich styling) dal vecchio `NavCard.tsx` dentro `NavigationCardBar.tsx` mantenendo l'architettura Framer Motion corrente. NON si importa GSAP né l'orientamento verticale. |
+| 2026-03-12 19:30 | **Phase 31 — Fix /about + Vertical Squircle** | Il frosted glass è camuffato su /about (colore identico a bg). Su mobile, rimpiazzare dropdown con squircle 60×60 che si espande in side-panel verticale (come il vecchio NavCard) usando Framer Motion invece di GSAP. |
