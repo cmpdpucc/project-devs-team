@@ -2,15 +2,15 @@
   "passed": true,
   "project_path": "C:\\Users\\danyp\\CODE\\project-devs-team",
   "project_type": "generic",
-  "timestamp": "2026-03-13T19:08:47.725720",
-  "total_duration_s": 0.0,
+  "timestamp": "2026-03-13T19:14:34.910772",
+  "total_duration_s": 0.01,
   "gates": [
     {
       "gate": "build",
       "status": "SKIP",
       "message": "No build command for 'generic' project",
       "detail": "",
-      "duration_s": 0.0,
+      "duration_s": 0.014999999999417923,
       "recovery": null
     }
   ],
