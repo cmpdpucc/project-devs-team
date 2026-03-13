@@ -388,6 +388,14 @@
   - **Agente:** `@frontend-specialist` | Skills: `frontend-design`
   - **DoD:** L'IdentityBar appare come un floating pill identico allo stile del nav hub, fornendo contrasto immediato ed eleganza.
 
+### 31.13. Transparent Navbar Wrapper & Floating Pills Logic
+- [x] Far "fluttuare" in aria i singoli elementi mantenendo la top navbar trasparente fino all'espansione:
+  - Aggiornare `_navigation-card-bar.scss` in modo da azzerare base/scrolled background su `.pf-nav-card-bar`.
+  - Introdurre lo stile a "pill" (background `rgba(15, 23, 42, 0.6)`, shadow, padding, radice sferica) anche per `__center` e `.pf-hamburger-btn`.
+  - A espansione avvenuta (`--has-expanded`), azzerare i pill in modo che si fondano perfettamente nello sfondo intero del menu a 100vw.
+  - **Agente:** `@frontend-specialist` | Skills: `ui-ux-pro-max`, `frontend-design`
+  - **DoD:** La top nav è completamente trasparente in default state; IdentityBar, GooeyNav, e Hamburger sembrano pasticche fluttuanti coese. Aprendo il menu, lo sfondo diventa solidamente omogeneo senza stripe.
+
 ---
 
 ## Processi Attivi
