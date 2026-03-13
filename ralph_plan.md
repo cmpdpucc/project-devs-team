@@ -380,13 +380,13 @@
   - **Agente:** `@frontend-specialist` | Skills: `frontend-design`
   - **DoD:** Il NavCardBar espanso mostra un singolo strato visivo di colore omogeneo dal logo fino alla fila inferiore delle card, senza stripe di colore discordanti.
 
-### 31.12. Perfect Transparency on HomePage Top (No Nested Backgrounds)
-- [x] Quando lo scroll è a 0 (HomePage al top), tutti i componenti interni devono perdere il loro background per mostrare totalmente l'artwork sottostante:
-  - SCSS: In `.pf-nav-card-bar--transparent:not(.pf-nav-card-bar--has-expanded)`, forzare `background-color`, `border-color` e `backdrop-filter` a trasparente/zero per `.pf-identity__trigger` e `.pf-hamburger-btn`, ripristinandoli con pseudoclasse `:hover`.
-  - TSX: Passare una classe `pf-nav-card-bar__mobile-identity--transparent` al wrapper della IdentityBar mobile quando `!isScrolled` e `!isExpanded`.
-  - SCSS: Rendere interamente trasparente lo squircle verticale su mobile quando è `--transparent`.
-  - **Agente:** `@frontend-specialist` | Skills: `ui-ux-pro-max`, `frontend-design`
-  - **DoD:** Al caricamento della HomePage, sia il menu principale che i bottoni interni risultano perfettamente trasparenti, evidenziando il background.
+### 31.12. Unify IdentityBar Styling with Navigation Navbar
+- [x] Far sì che la "pill" dell'IdentityBar sembri fluttuare con lo stesso stile dark frosted glass dell'header scrollato:
+  - Aggiornare `_identity.scss` per `.pf-identity__trigger`.
+  - Sostituire il bianco trasparente con `rgba(15, 23, 42, 0.85)` e `blur(16px)` per matchare il top navbar.
+  - Aggiungere `box-shadow` per migliorarne la profondità e coerenza visiva su desktop (trasparente) e mobile.
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`
+  - **DoD:** L'IdentityBar appare come un floating pill identico allo stile del nav hub, fornendo contrasto immediato ed eleganza.
 
 ---
 
