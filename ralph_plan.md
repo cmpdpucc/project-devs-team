@@ -372,6 +372,14 @@
   - **Agente:** `@frontend-specialist` | Skills: `frontend-design`, `ui-ux-pro-max`
   - **DoD:** La IdentityBar è visivamente allineata al centro esatto dell'area occupata dal close button / hamburger su mobile.
 
+### 31.11. Unify Desktop Expanded Background Colors (Layering Fix)
+- [x] Rimuovere l'effetto "a strisce" nel background dell'expanded menu su desktop:
+  - Il bug è causato dalla sovrapposizione di `pf-nav-card-bar` (parent) e `pf-nav-card-bar__expanded` (child), entrambi con il proprio `background-color` e `backdrop-filter`.
+  - SCSS: Aggiungere logica a `pf-nav-card-bar--has-expanded` sul parent per applicare un background scuro e solido (`rgba(15, 23, 42, 0.95)`) quando è aperto.
+  - SCSS: Rimuovere `background-color` e `backdrop-filter` dal figlio `__expanded` su desktop, lasciando che il colore del parent fluisca uniformemente su tutto il riquadro.
+  - **Agente:** `@frontend-specialist` | Skills: `frontend-design`
+  - **DoD:** Il NavCardBar espanso mostra un singolo strato visivo di colore omogeneo dal logo fino alla fila inferiore delle card, senza stripe di colore discordanti.
+
 ---
 
 ## Processi Attivi
