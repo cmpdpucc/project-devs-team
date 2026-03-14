@@ -74,14 +74,14 @@
 > **Perché:** Per implementare una UX di livello "pro-max" che massimizzi il feeling di lusso interattivo.
 
 ### 33.1. Pro-Max Glow Tracking Refinement
-- [ ] Refactor del tracking logico in `MagicBento.tsx` ed eventuale perfezionamento in SCSS:
+- [x] Refactor del tracking logico in `MagicBento.tsx` ed eventuale perfezionamento in SCSS:
   - Migliorare il posizionamento e l'easing dell'effetto glow.
   - Implementare transizioni CSS fluide per il posizionamento del raggio.
   - **Agente:** `@frontend-specialist` | Skills: `ui-ux-pro-max`
   - **DoD:** Il glow segue il mouse fluidamente (60fps) senza lag, offrendo un highlight netto sui bordi.
 
 ### 33.2. Verification & Commit
-- [ ] Testing in browser e Smart Commit.
+- [x] Testing in browser e Smart Commit.
   - **Agente:** `@frontend-specialist`
   - **DoD:** Implementazione confermata senza errori, commit pusheato.
 
@@ -98,3 +98,4 @@
 | Timestamp | Decisione | Motivazione |
 |-----------|-----------|-------------|
 | 2026-03-13 21:20 | **MagicBento BEM Refactor** | Adottata per coerenza con l'architettura del portfolio. Il componente viene reso agnostico (data-driven) per facilitare futura integrazione con CMS/Backend. |
+| 2026-03-14 16:30 | **Pro-Max UI Glow Enhancement** | Disaccoppiamento di layout reads dai writes in MagicBento via GSAP per evitare layout thrashing e ottenere un tracking "burroso" a 60fps. |
