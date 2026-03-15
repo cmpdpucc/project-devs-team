@@ -12,16 +12,16 @@
   - [x] Ispezionare `opencode.json` attuale
     - **Agente:** `@security-auditor`
     - DoD: File letto e segreti redatti
-- [ ] Phase 2: Configuration Cleanup & Setup [/]
-  - [/] Pulizia configurazioni NVIDIA errate
-  - [/] Update `opencode.json` con schema ufficiale NIM
-- [ ] Phase 3: Validation & Testing [ ]
-  - [ ] Validazione configurazione via CLI
-  - [ ] Test "hello_world.py" con Nemotron 3 Super
+- [x] Phase 2: Configuration Cleanup & Setup [x]
+  - [x] Pulizia configurazioni NVIDIA errate
+  - [x] Update `opencode.json` con schema ufficiale NIM
+- [x] Phase 3: Validation & Testing [x]
+  - [x] Validazione configurazione via CLI
+  - [x] Test "hello_world.py" con Nemotron 3 Super
 
 ## 📓 Log Decisioni & Cambiamenti
 - **2026-03-15 (16:47):** Switch a modalità "Senior Engineer". Abbandono di `opencode-antigravity-auth` per NVIDIA NIM in favore di `@ai-sdk/openai-compatible`.
-- **2026-03-15 (16:15):** Inizio configurazione integrazione NVIDIA Nemotron 3 Super.
+- **2026-03-15 (16:15)::** Inizio configurazione integrazione NVIDIA Nemotron 3 Super.
 
 ## 🚀 Processi Attivi
 | Nome | PID | Status | Tipo |
