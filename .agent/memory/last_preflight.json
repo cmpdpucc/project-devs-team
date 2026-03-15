@@ -2,15 +2,15 @@
   "passed": false,
   "project_path": "C:\\Users\\danyp\\CODE\\project-devs-team",
   "project_type": "generic",
-  "timestamp": "2026-03-14T16:11:40.721875",
-  "total_duration_s": 0.19,
+  "timestamp": "2026-03-15T15:16:38.645896",
+  "total_duration_s": 0.34,
   "gates": [
     {
       "gate": "git",
       "status": "FAIL",
-      "message": "3 tracked file(s) modified/staged",
-      "detail": " M .agent/memory/last_preflight.json\n M portfolio\n M ralph_plan.md",
-      "duration_s": 0.1879999999946449,
+      "message": "1 tracked file(s) modified/staged",
+      "detail": " M portfolio",
+      "duration_s": 0.3279999999795109,
       "recovery": "commit"
     },
     {
@@ -18,7 +18,7 @@
       "status": "SKIP",
       "message": "No build command for 'generic' project",
       "detail": "",
-      "duration_s": 0.0,
+      "duration_s": 0.01600000000325963,
       "recovery": null
     },
     {
