@@ -5,27 +5,23 @@
 **Supervisore:** `@orchestrator`
 
 ## 📋 Obiettivi Correnti
-- [x] Phase 1: Environment Diagnostics [x]
-  - [x] Verificare installazione OpenCode
-    - **Agente:** `@debugger` | Skills: `powershell-windows`
-    - DoD: Path di opencode identificato
-  - [x] Verificare/Impostare PowerShell ExecutionPolicy
-    - **Agente:** `@devops-engineer` | Skills: `powershell-windows`
-    - DoD: Policy impostata su `RemoteSigned`
-- [x] Phase 2: Plugin & Model Setup [x]
-  - [x] Installare `opencode-antigravity-auth@beta`
-    - **Agente:** `@devops-engineer` | Skills: `powershell-windows`
-    - DoD: Plugin installato con successo
-  - [x] Configurare `opencode.json`
-    - **Agente:** `@backend-specialist` | Skills: `nodejs-best-practices`
-    - DoD: File JSON aggiornato con parametri NVIDIA
-- [ ] Phase 3: Security & Handover [/]
-  - [/] Preparazione comando API KEY
+- [x] Phase 1: Environment & Discovery [x]
+  - [x] Verificare `opencode --version`
+    - **Agente:** `@orchestrator`
+    - DoD: Versione 1.2.4+ confermata
+  - [x] Ispezionare `opencode.json` attuale
     - **Agente:** `@security-auditor`
-    - DoD: Comando pronto in chat per l'utente
+    - DoD: File letto e segreti redatti
+- [ ] Phase 2: Configuration Cleanup & Setup [/]
+  - [/] Pulizia configurazioni NVIDIA errate
+  - [/] Update `opencode.json` con schema ufficiale NIM
+- [ ] Phase 3: Validation & Testing [ ]
+  - [ ] Validazione configurazione via CLI
+  - [ ] Test "hello_world.py" con Nemotron 3 Super
 
 ## 📓 Log Decisioni & Cambiamenti
-- **2026-03-15:** Inizio configurazione integrazione NVIDIA Nemotron 3 Super.
+- **2026-03-15 (16:47):** Switch a modalità "Senior Engineer". Abbandono di `opencode-antigravity-auth` per NVIDIA NIM in favore di `@ai-sdk/openai-compatible`.
+- **2026-03-15 (16:15):** Inizio configurazione integrazione NVIDIA Nemotron 3 Super.
 
 ## 🚀 Processi Attivi
 | Nome | PID | Status | Tipo |
