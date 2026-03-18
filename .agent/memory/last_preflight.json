@@ -2,40 +2,16 @@
   "passed": false,
   "project_path": "C:\\Users\\danyp\\CODE\\project-devs-team",
   "project_type": "generic",
-  "timestamp": "2026-03-17T14:22:54.674426",
-  "total_duration_s": 0.28,
+  "timestamp": "2026-03-18T11:55:57.070050",
+  "total_duration_s": 1.41,
   "gates": [
     {
       "gate": "git",
       "status": "FAIL",
-      "message": "4 tracked file(s) modified/staged",
-      "detail": " M .agent/memory/last_preflight.json\n M portfolio\n M ralph_plan.md\n M test_output.log",
-      "duration_s": 0.28099999999994907,
+      "message": "2 tracked file(s) modified/staged",
+      "detail": " M portfolio\n M ralph_plan.md",
+      "duration_s": 1.4069999999919673,
       "recovery": "commit"
-    },
-    {
-      "gate": "build",
-      "status": "SKIP",
-      "message": "No build command for 'generic' project",
-      "detail": "",
-      "duration_s": 0.0,
-      "recovery": null
-    },
-    {
-      "gate": "tests",
-      "status": "SKIP",
-      "message": "No test runner for 'generic' project",
-      "detail": "",
-      "duration_s": 0.0,
-      "recovery": null
-    },
-    {
-      "gate": "deps",
-      "status": "SKIP",
-      "message": "No dependency check for 'generic' project",
-      "detail": "",
-      "duration_s": 0.0,
-      "recovery": null
     }
   ],
   "failed_gates": [
